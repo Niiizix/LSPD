@@ -626,7 +626,7 @@ function createOfficerCard(agent, corps) {
     }
     
     // Chemin de l'image basé sur le numéro de badge
-    const imagePath = `${agent.badge}.jpg`;
+    const imagePath = `${agent.badge}.webp`;
     
     // Contenu HTML de la carte
     officerCard.innerHTML = `
