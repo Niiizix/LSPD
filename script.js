@@ -626,12 +626,12 @@ function createOfficerCard(agent, corps) {
     }
     
     // Chemin de l'image basé sur le numéro de badge
-    const imagePath = `${agent.badge}.webp`;
+    const imagePath = `imgs/${agent.badge}.jpg`;
     
     // Contenu HTML de la carte
     officerCard.innerHTML = `
         <div class="officer-photo">
-            <img src="${imagePath}" alt="${agent.grade} ${agent.prenom} ${agent.nom}" onerror="this.src='default.jpg'; this.onerror=null;">
+            <img src="${imagePath}" alt="${agent.grade} ${agent.prenom} ${agent.nom}" onerror="this.src='imgs/default.jpg'; this.onerror=null;">
             <div class="officer-info">
                 <div class="officer-name">${agent.prenom} ${agent.nom}</div>
                 <div class="officer-details">
