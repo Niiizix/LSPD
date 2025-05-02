@@ -1,0 +1,573 @@
+<!-- rapports-ois.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports OIS - LSPD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <p><strong>AVERTISSEMENT :</strong> Ce site est destiné au RP (Roleplay) dans le cadre du jeu GTA et n'a aucune valeur légale.</p>
+    </div>
+    
+    <header class="agent-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="imgs/logo.webp" alt="Logo LSPD" />
+                <div class="logo-text">
+                    <h1>LSPD</h1>
+                </div>
+            </div>
+            <div class="agent-info" id="agentInfoHeader">
+                <!-- Les informations de l'agent seront injectées ici via JavaScript -->
+            </div>
+            <div class="logout-button">
+                <button id="logoutBtn" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="agent-nav">
+        <div class="nav-container">
+            <ul>
+                <li><a href="agent-dashboard.html" data-access-level="1"><i class="fas fa-home"></i> Tableau de bord</a></li>
+                <li><a href="rapports-ois.html" class="active" data-access-level="1"><i class="fas fa-clipboard-list"></i> Rapports OIS</a></li>
+                <li><a href="personnel.html" data-access-level="1"><i class="fas fa-users"></i> Personnel</a></li>
+                <li><a href="parametres.html" data-access-level="4"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="agent-main">
+        <div class="dashboard-container">
+            <h1 class="dashboard-title">Rapports OIS (Officer Involved Shooting)</h1>
+            <p class="section-description">Tout usage d'arme à feu par un agent doit être rapporté via ce formulaire.</p>
+            
+            <div class="action-buttons">
+                <button id="newReportBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Nouveau Rapport OIS</button>
+            </div>
+            
+            <!-- Formulaire pour nouveau rapport (affiché en modal) -->
+            <div id="reportFormModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Nouveau Rapport OIS</h2>
+                    
+                    <form id="oisReportForm">
+                        <div class="form-group">
+                            <label for="dateFaits">Date des faits</label>
+                            <input type="date" id="dateFaits" name="dateFaits" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="heureFaits">Heure des faits</label>
+                            <input type="time" id="heureFaits" name="heureFaits" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lieuFaits">Lieu des faits</label>
+                            <input type="text" id="lieuFaits" name="lieuFaits" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="motifUsage">Motif(s) de l'usage de l'arme</label>
+                            <textarea id="motifUsage" name="motifUsage" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="armeUtilisee">Arme utilisée</label>
+                            <input type="text" id="armeUtilisee" name="armeUtilisee" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nombreBalles">Nombre de balles tirées</label>
+                            <input type="number" id="nombreBalles" name="nombreBalles" min="1" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Soumettre le rapport</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Modal pour visualiser/évaluer un rapport (pour corps de commandement et plus) -->
+            <div id="reportViewModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal view-close">&times;</span>
+                    <h2>Évaluation du Rapport OIS</h2>
+                    
+                    <div class="report-author-info">
+                        <p><strong>Rédacteur:</strong> <span id="reportAuthor"></span></p>
+                        <p><strong>Matricule:</strong> <span id="reportMatricule"></span></p>
+                        <p><strong>Date de soumission:</strong> <span id="reportTimestamp"></span></p>
+                    </div>
+                    
+                    <div class="report-details">
+                        <div class="report-field">
+                            <label>Date des faits:</label>
+                            <p id="viewDateFaits"></p>
+                        </div>
+                        
+                        <div class="report-field">
+                            <label>Heure des faits:</label>
+                            <p id="viewHeureFaits"></p>
+                        </div>
+                        
+                        <div class="report-field">
+                            <label>Lieu des faits:</label>
+                            <p id="viewLieuFaits"></p>
+                        </div>
+                        
+                        <div class="report-field">
+                            <label>Motif(s) d'usage:</label>
+                            <p id="viewMotifUsage"></p>
+                        </div>
+                        
+                        <div class="report-field">
+                            <label>Arme utilisée:</label>
+                            <p id="viewArmeUtilisee"></p>
+                        </div>
+                        
+                        <div class="report-field">
+                            <label>Nombre de balles tirées:</label>
+                            <p id="viewNombreBalles"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="evaluation-buttons" id="evaluationButtons">
+                        <button id="legitimeBtn" class="btn btn-success"><i class="fas fa-check"></i> Légitime</button>
+                        <button id="illegitimeBtn" class="btn btn-danger"><i class="fas fa-times"></i> Illégitime</button>
+                        <button id="deleteReportBtn" class="btn btn-warning"><i class="fas fa-trash"></i> Supprimer</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Liste des rapports OIS (visible uniquement pour corps de commandement et plus) -->
+            <div id="reportsListSection" class="reports-list-section" style="display: none;">
+                <h2>Liste des Rapports OIS</h2>
+                <div class="table-responsive">
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>Agent</th>
+                                <th>Matricule</th>
+                                <th>Date de soumission</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsTableBody">
+                            <!-- Les rapports seront insérés ici via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <p id="noReportsMessage" class="no-data-message">Aucun rapport disponible.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>LSPD</h3>
+                <ul>
+                    <li><a href="index.html">Site public</a></li>
+                    <li><a href="#">Nos services</a></li>
+                    <li><a href="#">Organigramme</a></li>
+                    <li><a href="#">Archives</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="#">Code pénal</a></li>
+                    <li><a href="#">Formulaires</a></li>
+                    <li><a href="#">Procédures</a></li>
+                    <li><a href="#">Support technique</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-headset"></i> Support interne</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Manuel d'utilisation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Los Santos Police Department. Système interne.</p>
+            <p class="rp-disclaimer">Ce site est créé uniquement pour le RP (Roleplay) dans GTA. Il n'a aucune affiliation avec des services de police réels et n'a aucune valeur légale.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer l'utilisateur connecté
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+            
+            console.log("Page Rapports OIS - Utilisateur connecté:", currentUser.prenom, currentUser.nom);
+            console.log("Grade:", currentUser.grade, "- Niveau d'accès:", currentUser.accessLevel);
+            
+            // Initialiser le tableau des rapports si nécessaire
+            if (!localStorage.getItem('oisReports')) {
+                console.log("Initialisation du localStorage pour les rapports OIS");
+                localStorage.setItem('oisReports', JSON.stringify([]));
+            }
+            
+            // Chargement des rapports
+            loadOISReports();
+            console.log("Rapports chargés - Nombre total:", oisReports.length);
+            
+            // Référence au modal et aux boutons
+            const newReportBtn = document.getElementById('newReportBtn');
+            const reportFormModal = document.getElementById('reportFormModal');
+            const reportViewModal = document.getElementById('reportViewModal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const viewCloseBtn = document.querySelector('.view-close');
+            const oisReportForm = document.getElementById('oisReportForm');
+            
+            // Références aux boutons d'évaluation
+            const legitimeBtn = document.getElementById('legitimeBtn');
+            const illegitimeBtn = document.getElementById('illegitimeBtn');
+            const deleteReportBtn = document.getElementById('deleteReportBtn');
+            
+            // Variable pour stocker l'ID du rapport en cours de visualisation
+            let currentReportId = null;
+            
+            // URL du webhook Discord (à remplacer par votre URL réelle)
+            const webhookUrl = "https://discord.com/api/webhooks/1367311505812623360/jCsNRwE9Jxu0E0xQbeSddZ12EABgG0UBu5t__LDTMvhGdEplEDNVM52JeGn__QgYf9GH";
+            
+            // Afficher ou masquer la liste des rapports selon le niveau d'accès
+            const reportsListSection = document.getElementById('reportsListSection');
+            if (currentUser.accessLevel >= 3) { // Corps de commandement et plus
+                console.log("Niveau d'accès suffisant pour voir la liste des rapports");
+                reportsListSection.style.display = 'block';
+                // Mise à jour de la liste des rapports
+                updateReportsList();
+            } else {
+                console.log("Niveau d'accès insuffisant pour voir la liste des rapports");
+                reportsListSection.style.display = 'none';
+            }
+            
+            // Ouvrir le modal pour nouveau rapport
+            newReportBtn.addEventListener('click', function() {
+                reportFormModal.style.display = "block";
+            });
+            
+            // Fermer les modals
+            closeModalBtn.addEventListener('click', function() {
+                reportFormModal.style.display = "none";
+            });
+            
+            viewCloseBtn.addEventListener('click', function() {
+                reportViewModal.style.display = "none";
+            });
+            
+            // Fermer les modals en cliquant à l'extérieur
+            window.addEventListener('click', function(event) {
+                if (event.target === reportFormModal) {
+                    reportFormModal.style.display = "none";
+                }
+                if (event.target === reportViewModal) {
+                    reportViewModal.style.display = "none";
+                }
+            });
+            
+            // Soumission du formulaire de rapport
+            oisReportForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Récupérer les données du formulaire
+                const reportData = {
+                    agent: {
+                        prenom: currentUser.prenom,
+                        nom: currentUser.nom,
+                        matricule: currentUser.matricule,
+                        grade: currentUser.grade
+                    },
+                    dateFaits: document.getElementById('dateFaits').value,
+                    heureFaits: document.getElementById('heureFaits').value,
+                    lieuFaits: document.getElementById('lieuFaits').value,
+                    motifUsage: document.getElementById('motifUsage').value,
+                    armeUtilisee: document.getElementById('armeUtilisee').value,
+                    nombreBalles: document.getElementById('nombreBalles').value
+                };
+                
+                // Ajouter le rapport
+                const newReport = addOISReport(reportData);
+                console.log("Nouveau rapport créé avec ID:", newReport.id);
+                
+                // Préparer les données pour Discord
+                const discordPayload = {
+                    embeds: [{
+                        title: "Nouveau Rapport OIS",
+                        color: 3447003, // Bleu
+                        fields: [
+                            {
+                                name: "👮 Agent",
+                                value: `**${reportData.agent.grade}** ${reportData.agent.prenom} ${reportData.agent.nom} (${reportData.agent.matricule})`,
+                                inline: false
+                            },
+                            {
+                                name: "📅 Date et Heure des faits",
+                                value: `${reportData.dateFaits} à ${reportData.heureFaits}`,
+                                inline: true
+                            },
+                            {
+                                name: "📍 Lieu",
+                                value: reportData.lieuFaits,
+                                inline: true
+                            },
+                            {
+                                name: "🔫 Arme utilisée",
+                                value: `${reportData.armeUtilisee} (${reportData.nombreBalles} balles tirées)`,
+                                inline: true
+                            },
+                            {
+                                name: "📝 Motif d'usage",
+                                value: reportData.motifUsage,
+                                inline: false
+                            }
+                        ],
+                        timestamp: new Date(),
+                        footer: {
+                            text: "Rapport OIS via le système LSPD"
+                        }
+                    }]
+                };
+                
+                // Envoyer les données au webhook Discord
+                fetch(webhookUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(discordPayload)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Succès - Fermer le modal et réinitialiser le formulaire
+                        oisReportForm.reset();
+                        reportFormModal.style.display = "none";
+                        
+                        // Mettre à jour la liste des rapports si l'utilisateur a accès
+                        if (currentUser.accessLevel >= 3) {
+                            updateReportsList();
+                        }
+                        
+                        alert("Votre rapport a été soumis avec succès.");
+                    } else {
+                        throw new Error("Erreur lors de l'envoi du rapport");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur:", error);
+                    
+                    // Même en cas d'erreur avec Discord, on sauvegarde le rapport localement
+                    if (currentUser.accessLevel >= 3) {
+                        updateReportsList();
+                    }
+                    
+                    alert("Le rapport a été enregistré localement, mais n'a pas pu être envoyé à Discord. Veuillez informer l'administrateur système.");
+                });
+            });
+            
+            // Actions d'évaluation pour les utilisateurs avec niveau d'accès suffisant
+            if (currentUser.accessLevel >= 3) {
+                // Marquer comme légitime
+                legitimeBtn.addEventListener('click', function() {
+                    if (currentReportId) {
+                        updateOISReportStatus(currentReportId, "Légitime");
+                        reportViewModal.style.display = "none";
+                        updateReportsList();
+                        
+                        // Notifier sur Discord
+                        sendStatusUpdateToDiscord("Légitime", currentReportId);
+                    }
+                });
+                
+                // Marquer comme illégitime
+                illegitimeBtn.addEventListener('click', function() {
+                    if (currentReportId) {
+                        updateOISReportStatus(currentReportId, "Enquête en cours");
+                        reportViewModal.style.display = "none";
+                        updateReportsList();
+                        
+                        // Notifier sur Discord
+                        sendStatusUpdateToDiscord("Enquête en cours", currentReportId);
+                    }
+                });
+                
+                // Supprimer le rapport
+                deleteReportBtn.addEventListener('click', function() {
+                    if (currentReportId && confirm("Êtes-vous sûr de vouloir supprimer ce rapport ?")) {
+                        deleteOISReport(currentReportId);
+                        reportViewModal.style.display = "none";
+                        updateReportsList();
+                    }
+                });
+            }
+            
+            // Fonction pour mettre à jour la liste des rapports
+            function updateReportsList() {
+                console.log("Mise à jour de la liste des rapports");
+                const tableBody = document.getElementById('reportsTableBody');
+                const noReportsMessage = document.getElementById('noReportsMessage');
+                
+                if (!tableBody) {
+                    console.error("Élément reportsTableBody introuvable !");
+                    return;
+                }
+                
+                // Vider le tableau
+                tableBody.innerHTML = '';
+                
+                console.log("Nombre de rapports à afficher:", oisReports.length);
+                
+                if (oisReports.length === 0) {
+                    if (noReportsMessage) {
+                        noReportsMessage.style.display = 'block';
+                    }
+                    console.log("Aucun rapport à afficher");
+                    return;
+                }
+                
+                if (noReportsMessage) {
+                    noReportsMessage.style.display = 'none';
+                }
+                
+                // Remplir le tableau avec les rapports
+                oisReports.forEach(report => {
+                    const row = document.createElement('tr');
+                    
+                    // Définir la classe de la ligne en fonction du statut
+                    const statusClass = report.status ? report.status.toLowerCase().replace(/\s+/g, '-') : 'inconnu';
+                    row.className = `report-row status-${statusClass}`;
+                    
+                    row.innerHTML = `
+                        <td>${report.agent.grade} ${report.agent.nom} ${report.agent.prenom}</td>
+                        <td>${report.agent.matricule}</td>
+                        <td>${new Date(report.timestamp).toLocaleDateString()} ${new Date(report.timestamp).toLocaleTimeString()}</td>
+                        <td><span class="status-badge status-${statusClass}">${report.status}</span></td>
+                        <td>
+                            <button class="btn btn-small btn-view" data-report-id="${report.id}"><i class="fas fa-eye"></i> Voir</button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+                console.log("Tableau de rapports mis à jour avec succès");
+                
+                // Ajouter les événements pour les boutons de visualisation
+                document.querySelectorAll('.btn-view').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const reportId = parseInt(this.getAttribute('data-report-id'));
+                        viewReport(reportId);
+                    });
+                });
+            }
+            
+            // Fonction pour afficher un rapport
+            function viewReport(reportId) {
+                console.log("Visualisation du rapport:", reportId);
+                const report = oisReports.find(r => r.id === reportId);
+                if (!report) {
+                    console.error("Rapport non trouvé:", reportId);
+                    return;
+                }
+                
+                // Stocker l'ID du rapport actuel
+                currentReportId = reportId;
+                
+                // Mise à jour du statut si c'est "En attente"
+                if (report.status === "En attente") {
+                    updateOISReportStatus(reportId, "En cours");
+                    updateReportsList();
+                }
+                
+                // Remplir les informations du rapport
+                document.getElementById('reportAuthor').textContent = `${report.agent.grade} ${report.agent.prenom} ${report.agent.nom}`;
+                document.getElementById('reportMatricule').textContent = report.agent.matricule;
+                document.getElementById('reportTimestamp').textContent = new Date(report.timestamp).toLocaleString();
+                
+                document.getElementById('viewDateFaits').textContent = report.dateFaits;
+                document.getElementById('viewHeureFaits').textContent = report.heureFaits;
+                document.getElementById('viewLieuFaits').textContent = report.lieuFaits;
+                document.getElementById('viewMotifUsage').textContent = report.motifUsage;
+                document.getElementById('viewArmeUtilisee').textContent = report.armeUtilisee;
+                document.getElementById('viewNombreBalles').textContent = report.nombreBalles;
+                
+                // Afficher ou masquer les boutons d'évaluation selon le statut
+                const evaluationButtons = document.getElementById('evaluationButtons');
+                
+                if (report.status === "Légitime" || report.status === "Enquête en cours") {
+                    // Si déjà évalué, masquer les boutons de légitimité
+                    document.getElementById('legitimeBtn').style.display = 'none';
+                    document.getElementById('illegitimeBtn').style.display = 'none';
+                } else {
+                    document.getElementById('legitimeBtn').style.display = 'inline-block';
+                    document.getElementById('illegitimeBtn').style.display = 'inline-block';
+                }
+                
+                // Afficher le modal
+                reportViewModal.style.display = "block";
+            }
+            
+            // Fonction pour envoyer une mise à jour de statut à Discord
+            function sendStatusUpdateToDiscord(status, reportId) {
+                const report = oisReports.find(r => r.id === reportId);
+                if (!report) return;
+                
+                const discordPayload = {
+                    embeds: [{
+                        title: `Rapport OIS - Statut mis à jour: ${status}`,
+                        color: status === "Légitime" ? 5763719 : 15548997, // Vert pour légitime, Rouge pour illégitime
+                        fields: [
+                            {
+                                name: "👮 Agent concerné",
+                                value: `**${report.agent.grade}** ${report.agent.prenom} ${report.agent.nom} (${report.agent.matricule})`,
+                                inline: false
+                            },
+                            {
+                                name: "📅 Date et Heure des faits",
+                                value: `${report.dateFaits} à ${report.heureFaits}`,
+                                inline: true
+                            },
+                            {
+                                name: "👤 Évalué par",
+                                value: `${currentUser.grade} ${currentUser.prenom} ${currentUser.nom}`,
+                                inline: false
+                            }
+                        ],
+                        timestamp: new Date(),
+                        footer: {
+                            text: "Système LSPD - Gestion des rapports OIS"
+                        }
+                    }]
+                };
+                
+                // Envoyer la notification à Discord
+                fetch(webhookUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(discordPayload)
+                }).catch(error => {
+                    console.error("Erreur lors de l'envoi de la notification:", error);
+                });
+            }
+        });
+    </script>

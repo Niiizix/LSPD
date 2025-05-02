@@ -1,0 +1,99 @@
+<!-- parametres.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres - LSPD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <p><strong>AVERTISSEMENT :</strong> Ce site est destiné au RP (Roleplay) dans le cadre du jeu GTA et n'a aucune valeur légale.</p>
+    </div>
+    
+    <header class="agent-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="imgs/logo.webp" alt="Logo LSPD" />
+                <div class="logo-text">
+                    <h1>LSPD</h1>
+                </div>
+            </div>
+            <!-- Suite de parametres.html -->
+            <div class="agent-info" id="agentInfoHeader">
+                <!-- Les informations de l'agent seront injectées ici via JavaScript -->
+            </div>
+            <div class="logout-button">
+                <button id="logoutBtn" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="agent-nav">
+        <div class="nav-container">
+            <ul>
+                <li><a href="agent-dashboard.html" data-access-level="1"><i class="fas fa-home"></i> Tableau de bord</a></li>
+                <li><a href="rapports-ois.html" data-access-level="1"><i class="fas fa-clipboard-list"></i> Rapports OIS</a></li>
+                <li><a href="personnel.html" data-access-level="1"><i class="fas fa-users"></i> Personnel</a></li>
+                <li><a href="parametres.html" class="active" data-access-level="4"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="agent-main">
+        <div class="dashboard-container">
+            <h1 class="dashboard-title">Paramètres du Système</h1>
+            <p class="section-description">Configuration du système LSPD (réservé au corps de direction).</p>
+            
+            <div class="construction-container">
+                <div class="construction-icon">
+                    <i class="fas fa-hard-hat"></i>
+                </div>
+                <h2>Page en cours de développement</h2>
+                <p>Cette section est actuellement en construction et sera bientôt disponible.</p>
+                <p>Revenez ultérieurement pour accéder aux fonctionnalités d'administration du système.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>LSPD</h3>
+                <ul>
+                    <li><a href="index.html">Site public</a></li>
+                    <li><a href="#">Nos services</a></li>
+                    <li><a href="#">Organigramme</a></li>
+                    <li><a href="#">Archives</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="#">Code pénal</a></li>
+                    <li><a href="#">Formulaires</a></li>
+                    <li><a href="#">Procédures</a></li>
+                    <li><a href="#">Support technique</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-headset"></i> Support interne</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Manuel d'utilisation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Los Santos Police Department. Système interne.</p>
+            <p class="rp-disclaimer">Ce site est créé uniquement pour le RP (Roleplay) dans GTA. Il n'a aucune affiliation avec des services de police réels et n'a aucune valeur légale.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

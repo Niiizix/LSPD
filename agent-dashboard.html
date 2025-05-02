@@ -1,0 +1,178 @@
+<!-- agent-dashboard.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - LSPD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <p><strong>AVERTISSEMENT :</strong> Ce site est destiné au RP (Roleplay) dans le cadre du jeu GTA et n'a aucune valeur légale.</p>
+    </div>
+    
+    <header class="agent-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="imgs/logo.webp" alt="Logo LSPD" />
+                <div class="logo-text">
+                    <h1>LSPD</h1>
+                </div>
+            </div>
+            <div class="agent-info" id="agentInfoHeader">
+                <!-- Les informations de l'agent seront injectées ici via JavaScript -->
+            </div>
+            <div class="logout-button">
+                <button id="logoutBtn" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="agent-nav">
+        <div class="nav-container">
+            <ul>
+                <li><a href="agent-dashboard.html" class="active" data-access-level="1"><i class="fas fa-home"></i> Tableau de bord</a></li>
+                <li><a href="rapports-ois.html" data-access-level="1"><i class="fas fa-clipboard-list"></i> Rapports OIS</a></li>
+                <li><a href="personnel.html" data-access-level="1"><i class="fas fa-users"></i> Personnel</a></li>
+                <li><a href="parametres.html" data-access-level="4"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="agent-main">
+        <div class="dashboard-container">
+            <h1 class="dashboard-title">Tableau de Bord</h1>
+            <p class="welcome-message" id="welcomeMessage">Bienvenue, Officier</p>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3> Total effectifs</h3>
+                        <p class="stat-value" id="totalAgents">0</p>
+                        <p class="stat-desc">Agents</p>
+                    </div>
+                </div>
+                
+                <!-- Statistiques OIS - visibles seulement pour Lieutenant I et plus -->
+                <div class="stat-card ois-stat" style="display: none;" data-min-rank="Lieutenant I">
+                    <div class="stat-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Enquêtes OIS</h3>
+                        <p class="stat-value" id="investigationReports">0</p>
+                        <p class="stat-desc">Enquêtes en cours</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card ois-stat" style="display: none;" data-min-rank="Lieutenant I">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>OIS Validés</h3>
+                        <p class="stat-value" id="approvedReports">0</p>
+                        <p class="stat-desc">Rapports légitimes</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card ois-stat" style="display: none;" data-min-rank="Lieutenant I">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>En attente</h3>
+                        <p class="stat-value" id="pendingReports">0</p>
+                        <p class="stat-desc">Rapports à évaluer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-row">
+                <div class="dashboard-col">
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-chart-pie"></i> Répartition par Corps</h2>
+                        <div class="corps-distribution" id="corpsDistribution">
+                            <!-- Les éléments de répartition par corps seront injectés ici via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-col">
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-bullhorn"></i> Annonces Récentes</h2>
+                        <div class="recent-announcements">
+                            <!-- Les annonces seront chargées dynamiquement via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h2><i class="fas fa-link"></i> Liens Rapides</h2>
+                <div class="quick-links">
+                    <a href="rapports-ois.html" class="quick-link">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Nouveau Rapport OIS</span>
+                    </a>
+                    <a href="personnel.html" class="quick-link">
+                        <i class="fas fa-users"></i>
+                        <span>Liste du Personnel</span>
+                    </a>
+                    <a href="https://discord.gg/PgEhgymjps" target="_blank" class="quick-link">
+                        <i class="fab fa-discord"></i>
+                        <span>Discord LSPD</span>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <i class="fas fa-book"></i>
+                        <span>Code Pénal</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>LSPD</h3>
+                <ul>
+                    <li><a href="index.html">Site public</a></li>
+                    <li><a href="#">Nos services</a></li>
+                    <li><a href="#">Organigramme</a></li>
+                    <li><a href="#">Archives</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="#">Code pénal</a></li>
+                    <li><a href="#">Formulaires</a></li>
+                    <li><a href="#">Procédures</a></li>
+                    <li><a href="#">Support technique</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-headset"></i> Support interne</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Manuel d'utilisation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Los Santos Police Department. Système interne.</p>
+            <p class="rp-disclaimer">Ce site est créé uniquement pour le RP (Roleplay) dans GTA. Il n'a aucune affiliation avec des services de police réels et n'a aucune valeur légale.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

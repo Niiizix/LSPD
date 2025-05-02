@@ -1,0 +1,2828 @@
+/* styles.css */
+:root {
+    --primary-blue: #0a3d62;
+    --secondary-blue: #1e5f88;
+    --light-blue: #82b1d2;
+    --accent-blue: #164e87;
+    --dark-blue: #051f36;
+    --text-color: #f0f0f0;
+    --light-text: #ffffff;
+    --dark-text: #333333;
+    --highlight: #ffcc00;
+    --warning-bg: #f8d7da;
+    --warning-text: #721c24;
+    --warning-border: #f5c6cb;
+    --font-main: 'Roboto', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #f5f5f5;
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+/* Disclaimer Banner */
+.disclaimer-banner {
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+    text-align: center;
+    padding: 10px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--warning-border);
+    position: relative;
+    z-index: 1000;
+}
+
+.disclaimer-banner p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Header Styles */
+header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+    color: var(--text-color);
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 70px;
+    margin-right: 15px;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text h1 {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.logo-text span {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Navigation Styles */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-bottom: 3px;
+}
+
+nav ul li a:hover {
+    color: var(--highlight);
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--highlight);
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+nav ul li a.active {
+    color: var(--highlight);
+}
+
+nav ul li a.active::after {
+    width: 100%;
+    background-color: var(--highlight);
+}
+
+/* Main Content Styles */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(10, 61, 98, 0.8), rgba(5, 31, 54, 0.9)), url('images/hero-bg.jpg') no-repeat center center;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-text);
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content {
+    max-width: 700px;
+    padding: 0 20px;
+}
+
+.hero-content h2 {
+    font-family: var(--font-heading);
+    font-size: 42px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--accent-blue);
+    color: var(--light-text);
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background-color: var(--secondary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+}
+
+.btn-highlight {
+    background-color: var(--highlight);
+    color: var(--dark-text);
+}
+
+/* Info Cards Section */
+.info-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.info-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: var(--secondary-blue);
+    color: var(--light-text);
+    padding: 15px 20px;
+    font-family: var(--font-heading);
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content p {
+    margin-bottom: 15px;
+    color: var(--dark-text);
+}
+
+/* Badge Section */
+.badge-section {
+    background-color: var(--dark-blue);
+    color: var(--light-text);
+    padding: 60px 0;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.badge-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.badge-content h2 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.badge-content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--dark-blue);
+    color: var(--text-color);
+    padding: 40px 0 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.footer-col h3 {
+    color: var(--light-text);
+    font-family: var(--font-heading);
+    font-size: 18px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.footer-col h3::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background-color: var(--highlight);
+    margin-top: 10px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: var(--light-blue);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: var(--highlight);
+    padding-left: 5px;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 30px;
+    font-size: 14px;
+    opacity: 0.7;
+    max-width: 1200px;
+    margin: 30px auto 0;
+}
+
+.rp-disclaimer {
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 12px;
+    padding: 5px 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+        justify-content: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .hero-content h2 {
+        font-size: 32px;
+    }
+
+    .badge-section {
+        padding: 40px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        height: 50px;
+    }
+
+    .logo-text h1 {
+        font-size: 22px;
+    }
+
+    .hero-content h2 {
+        font-size: 28px;
+    }
+
+    .hero-section {
+        height: 300px;
+    }
+}
+
+/* Styles pour la page de recrutement */
+.page-header {
+    background-color: var(--primary-blue);
+    color: var(--light-text);
+    text-align: center;
+    padding: 50px 0;
+    margin-bottom: 40px;
+    border-radius: 10px;
+}
+
+.page-header h1 {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.requirements-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.requirements-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+}
+
+.requirements-card h3 {
+    margin-bottom: 20px;
+    color: var(--primary-blue);
+    font-family: var(--font-heading);
+}
+
+.requirements-list {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.requirements-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.requirements-list li i {
+    color: var(--primary-blue);
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.apply-button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Styles pour la modal du formulaire */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #f5f5f5;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: var(--dark-blue);
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.form-section h3 {
+    margin-bottom: 20px;
+    color: var(--primary-blue);
+    font-family: var(--font-heading);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: var(--font-main);
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(10, 61, 98, 0.3);
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    margin: 15px 0;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--primary-blue);
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--primary-blue);
+    cursor: pointer;
+}
+
+.range-value {
+    text-align: center;
+    font-weight: bold;
+    color: var(--primary-blue);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.form-status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.form-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    display: block;
+}
+
+.form-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 20px;
+    }
+}
+
+/* Styles pour la page Département */
+.department-intro {
+    margin-bottom: 50px;
+}
+
+.intro-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.intro-content {
+    padding: 40px;
+    flex: 3;
+}
+
+.intro-content h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-family: var(--font-heading);
+    font-size: 28px;
+}
+
+.intro-content p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+.badge-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-blue);
+    padding: 40px;
+    color: var(--light-text);
+}
+
+.badge-image i {
+    font-size: 120px;
+    opacity: 0.9;
+}
+
+/* Timeline pour l'histoire */
+.department-history {
+    margin-bottom: 60px;
+}
+
+.department-history h2 {
+    text-align: center;
+    color: var(--primary-blue);
+    margin-bottom: 40px;
+    font-family: var(--font-heading);
+    font-size: 32px;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--primary-blue);
+    top: 0;
+    bottom: 0;
+    left: 20%;
+    margin-left: -2px;
+}
+
+.timeline-item {
+    position: relative;
+    background-color: inherit;
+    width: 100%;
+    padding: 20px 40px 20px 70px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+
+.timeline-year {
+    position: absolute;
+    width: 100px;
+    left: 0;
+    top: 20px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--primary-blue);
+}
+
+.timeline-content {
+    padding: 20px 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-content h3 {
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+    font-family: var(--font-heading);
+}
+
+/* Section mission */
+.department-mission {
+    background-color: var(--light-blue);
+    padding: 60px 20px;
+    border-radius: 10px;
+    margin-bottom: 60px;
+}
+
+.department-mission h2 {
+    text-align: center;
+    color: var(--dark-blue);
+    margin-bottom: 40px;
+    font-family: var(--font-heading);
+    font-size: 32px;
+}
+
+.mission-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.mission-card {
+    background-color: white;
+    padding: 30px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.mission-card:hover {
+    transform: translateY(-10px);
+}
+
+.mission-icon {
+    margin-bottom: 20px;
+}
+
+.mission-icon i {
+    font-size: 40px;
+    color: var(--primary-blue);
+}
+
+.mission-card h3 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+}
+
+/* Structure section */
+.department-structure {
+    margin-bottom: 60px;
+}
+
+.department-structure h2 {
+    text-align: center;
+    color: var(--primary-blue);
+    margin-bottom: 40px;
+    font-family: var(--font-heading);
+    font-size: 32px;
+}
+
+.structure-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.structure-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.structure-info p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+.structure-list {
+    list-style: none;
+}
+
+.structure-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.structure-list li i {
+    color: var(--primary-blue);
+    margin-right: 10px;
+    font-size: 18px;
+    width: 25px;
+    text-align: center;
+}
+
+.structure-hierarchy {
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.structure-hierarchy h3 {
+    text-align: center;
+    color: var(--primary-blue);
+    margin-bottom: 30px;
+    font-family: var(--font-heading);
+}
+
+.hierarchy-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hierarchy-level {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.hierarchy-level::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 15px;
+    background-color: var(--primary-blue);
+    bottom: -15px;
+    left: 50%;
+}
+
+.hierarchy-level:last-child::after {
+    display: none;
+}
+
+.hierarchy-position {
+    background-color: var(--light-blue);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 150px;
+}
+
+.hierarchy-position.top-position {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.position-title {
+    font-weight: bold;
+}
+
+/* Values section */
+.department-values {
+    background-color: var(--dark-blue);
+    padding: 60px 20px;
+    border-radius: 10px;
+    margin-bottom: 60px;
+    color: var(--light-text);
+}
+
+.department-values h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-family: var(--font-heading);
+    font-size: 32px;
+}
+
+.values-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.value-item {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.value-item:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.value-item h3 {
+    color: var(--highlight);
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+}
+
+/* Contact section */
+.department-contact {
+    margin-bottom: 60px;
+}
+
+.contact-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.contact-card h2 {
+    color: var(--primary-blue);
+    margin-bottom: 30px;
+    font-family: var(--font-heading);
+}
+
+.contact-methods {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.contact-method {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+.contact-method i {
+    font-size: 30px;
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+}
+
+.contact-method h3 {
+    margin-bottom: 10px;
+    font-family: var(--font-heading);
+}
+
+.contact-method p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .intro-card {
+        flex-direction: column;
+    }
+    
+    .intro-content {
+        order: 2;
+    }
+    
+    .badge-image {
+        order: 1;
+        padding: 30px;
+    }
+    
+    .timeline::after {
+        left: 31px;
+    }
+    
+    .timeline-item {
+        padding-left: 70px;
+    }
+    
+    .timeline-year {
+        left: 0;
+        text-align: left;
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .mission-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .structure-container {
+        flex-direction: column;
+    }
+    
+    .values-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-methods {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Styles pour la page Officiers (placeholder) */
+.officers-placeholder {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.placeholder-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 50px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder-container i {
+    font-size: 80px;
+    color: var(--primary-blue);
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+.placeholder-container h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-family: var(--font-heading);
+}
+
+.placeholder-container p {
+    margin-bottom: 15px;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* Styles pour le bouton de login */
+.login-button {
+    margin-left: 20px;
+}
+
+.btn-login {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--light-text);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--highlight);
+    color: var(--dark-text);
+    border-color: var(--highlight);
+}
+
+.btn-login i {
+    margin-right: 5px;
+}
+
+/* Responsive adjustments for the login button */
+@media (max-width: 992px) {
+    .header-container {
+        flex-wrap: wrap;
+    }
+    
+    .login-button {
+        margin: 15px 0 0 0;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Styles pour la page de login */
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    background: linear-gradient(rgba(10, 61, 98, 0.8), rgba(5, 31, 54, 0.9)), url('images/hero-bg.jpg') no-repeat center center;
+    background-size: cover;
+    min-height: 70vh;
+}
+
+.login-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    text-align: center;
+}
+
+.login-header {
+    margin-bottom: 30px;
+}
+
+.login-header i {
+    font-size: 50px;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+.login-header h1 {
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+    font-family: var(--font-heading);
+    font-size: 28px;
+}
+
+.login-header p {
+    color: #777;
+    font-size: 16px;
+}
+
+.login-form {
+    text-align: left;
+}
+
+.login-form .form-group {
+    margin-bottom: 25px;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.login-form label i {
+    margin-right: 5px;
+    color: var(--primary-blue);
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: var(--font-main);
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(10, 61, 98, 0.3);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.login-actions {
+    margin-top: 30px;
+}
+
+.login-message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.login-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    display: block;
+}
+
+.login-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    display: block;
+}
+
+.login-help {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    color: #777;
+    font-size: 14px;
+}
+
+@media (max-width: 576px) {
+    .login-container {
+        padding: 30px 20px;
+    }
+}
+
+/* Styles pour le tableau de bord des agents */
+.agent-header {
+    background: var(--dark-blue);
+    color: var(--light-text);
+    padding: 15px 0;
+}
+
+.agent-header .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.agent-info {
+    display: flex;
+    align-items: center;
+}
+
+.agent-badge {
+    background-color: var(--highlight);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.agent-badge i {
+    color: var(--dark-blue);
+    font-size: 20px;
+}
+
+.agent-details {
+    line-height: 1.3;
+}
+
+.agent-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.agent-division {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.btn-logout {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--light-text);
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-logout i {
+    margin-right: 5px;
+}
+
+.agent-nav {
+    background-color: var(--primary-blue);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.agent-nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.agent-nav li {
+    margin-right: 5px;
+}
+
+.agent-nav a {
+    display: block;
+    padding: 15px 20px;
+    color: var(--light-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.agent-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.agent-nav a.active {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 3px solid var(--highlight);
+}
+
+.agent-nav a i {
+    margin-right: 8px;
+}
+
+.agent-main {
+    background-color: #f5f5f5;
+    min-height: 70vh;
+    padding: 40px 20px;
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-title {
+    margin-bottom: 10px;
+    color: var(--primary-blue);
+    font-family: var(--font-heading);
+    font-size: 32px;
+}
+
+.welcome-message {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.dashboard-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.dashboard-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-family: var(--font-heading);
+}
+
+.dashboard-card ul {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.dashboard-card li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 992px) {
+    .agent-header .header-container {
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        margin-bottom: 15px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .agent-info, .logout-button {
+        flex: 1;
+    }
+    
+    .agent-nav ul {
+        flex-wrap: wrap;
+    }
+    
+    .agent-nav li {
+        width: 50%;
+        margin-right: 0;
+    }
+    
+    .agent-nav a {
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .agent-nav li {
+        width: 100%;
+    }
+    
+    .agent-info, .logout-button {
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    .agent-info {
+        justify-content: center;
+    }
+}
+
+/* Styles pour les pages agent */
+/* Styles des tables */
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: var(--primary-blue);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+.actions-cell {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+    margin: 0 2px;
+}
+
+.btn-edit {
+    background-color: var(--accent-blue);
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+}
+
+.btn-view {
+    background-color: var(--secondary-blue);
+}
+
+/* Styles pour les badges de statut */
+.status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-en-attente {
+    background-color: #f39c12;
+    color: white;
+}
+
+.status-en-cours {
+    background-color: #3498db;
+    color: white;
+}
+
+.status-légitime {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.status-enquête-en-cours {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Coloration des lignes de rapport selon leur statut */
+.report-row.status-en-attente {
+    border-left: 3px solid #f39c12;
+}
+
+.report-row.status-en-cours {
+    border-left: 3px solid #3498db;
+}
+
+.report-row.status-légitime {
+    border-left: 3px solid #2ecc71;
+}
+
+.report-row.status-enquête-en-cours {
+    border-left: 3px solid #e74c3c;
+}
+
+/* Styles pour les boutons d'action */
+.action-buttons {
+    margin-bottom: 20px;
+}
+
+.admin-actions {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+/* Styles pour la section en construction */
+.construction-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 50px 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 30px;
+}
+
+.construction-icon {
+    font-size: 80px;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.construction-container h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-family: var(--font-heading);
+}
+
+.construction-container p {
+    margin-bottom: 15px;
+    font-size: 17px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Styles pour les modals plus complets */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #f5f5f5;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: var(--dark-blue);
+}
+
+/* Styles pour les formulaires */
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h3 {
+    margin-bottom: 20px;
+    color: var(--primary-blue);
+    font-family: var(--font-heading);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: var(--font-main);
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(10, 61, 98, 0.3);
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Styles pour la visualisation des rapports */
+.report-author-info {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.report-details {
+    margin-bottom: 30px;
+}
+
+.report-field {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.report-field label {
+    font-weight: bold;
+    color: var(--primary-blue);
+    margin-bottom: 5px;
+}
+
+.report-field p {
+    margin: 0;
+}
+
+.evaluation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+.section-description {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+/* Styles pour la page Personnel */
+.personnel-table tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+/* Styles pour les éléments sans données */
+.no-data-message {
+    text-align: center;
+    padding: 30px;
+    font-style: italic;
+    color: #777;
+}
+
+/* Media queries */
+@media (max-width: 992px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .evaluation-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .evaluation-buttons button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    th, td {
+        padding: 10px;
+    }
+    
+    .actions-cell {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .btn-small {
+        margin: 2px 0;
+    }
+}
+
+/* Styles pour la page des officiers */
+
+/* Section d'introduction */
+.officers-intro {
+    margin-bottom: 40px;
+}
+
+.intro-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.intro-container p {
+    color: #555;
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.intro-container p:last-child {
+    margin-bottom: 0;
+    font-style: italic;
+    color: #777;
+}
+
+/* Section principale des officiers */
+.officers-section {
+    padding: 40px 0;
+}
+
+/* Conteneur des cartes */
+.officers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Styles pour les sections par corps */
+.officers-corps-section {
+    margin-bottom: 50px;
+}
+
+.corps-title {
+    color: var(--primary-blue);
+    font-family: var(--font-heading);
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-blue);
+    position: relative;
+}
+
+/* Couleurs spécifiques pour les titres des corps */
+.corps-title:before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: var(--primary-blue);
+}
+
+.officers-corps-section:nth-child(1) .corps-title:before {
+    background-color: #e74c3c; /* Rouge pour Corps de direction */
+}
+
+.officers-corps-section:nth-child(2) .corps-title:before {
+    background-color: #f39c12; /* Orange pour Corps de commandement */
+}
+
+.officers-corps-section:nth-child(3) .corps-title:before {
+    background-color: #2ecc71; /* Vert pour Corps de supervision */
+}
+
+.officers-corps-section:nth-child(4) .corps-title:before {
+    background-color: #3498db; /* Bleu pour Corps exécutif */
+}
+
+.officers-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* Style de la carte individuelle d'un officier */
+.officer-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border-bottom: 4px solid var(--primary-blue);
+}
+
+/* Effet au survol de la carte */
+.officer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Couleurs des bordures selon le corps */
+.officer-card.corps-corps-de-direction {
+    border-bottom-color: #e74c3c; /* Rouge */
+}
+
+.officer-card.corps-corps-de-commandement {
+    border-bottom-color: #f39c12; /* Orange */
+}
+
+.officer-card.corps-corps-de-supervision {
+    border-bottom-color: #2ecc71; /* Vert */
+}
+
+.officer-card.corps-corps-exécutif {
+    border-bottom-color: #3498db; /* Bleu */
+}
+
+/* Conteneur de la photo */
+.officer-photo {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+}
+
+/* Style de l'image */
+.officer-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+/* Effet sur l'image au survol */
+.officer-card:hover .officer-photo img {
+    filter: brightness(0.7);
+    transform: scale(1.05);
+}
+
+/* Informations de l'officier (visible au survol) */
+.officer-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(10, 61, 98, 0.8);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Affichage des infos au survol */
+.officer-card:hover .officer-info {
+    opacity: 1;
+}
+
+/* Nom de l'officier */
+.officer-name {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Détails de l'officier */
+.officer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.officer-grade {
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.officer-matricule {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Pied de la carte avec le grade */
+.officer-footer {
+    padding: 12px 15px;
+    background: #f5f5f5;
+    text-align: center;
+}
+
+.officer-footer span {
+    font-weight: 500;
+    color: var(--primary-blue);
+    font-size: 14px;
+}
+
+/* Message affiché quand il n'y a pas d'officiers */
+.no-officers-message {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 600px;
+}
+
+.no-officers-message i {
+    font-size: 60px;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.no-officers-message h2 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+}
+
+.no-officers-message p {
+    color: #666;
+    font-size: 16px;
+}
+
+/* Media queries pour le responsive */
+@media (max-width: 992px) {
+    .officers-container,
+    .officers-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .officers-container,
+    .officers-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+    
+    .officer-photo {
+        height: 250px;
+    }
+    
+    .officer-name {
+        font-size: 18px;
+    }
+    
+    .officer-grade {
+        font-size: 16px;
+    }
+    
+    .corps-title {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .officers-container,
+    .officers-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+    
+    .officer-photo {
+        height: 200px;
+    }
+    
+    .corps-title {
+        font-size: 20px;
+    }
+    
+    .intro-container {
+        padding: 20px;
+    }
+    
+    .intro-container p {
+        font-size: 15px;
+    }
+}
+
+/* Styles pour le tableau de bord - à ajouter à la fin de styles.css existant */
+
+/* Cartes statistiques */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(10, 61, 98, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.stat-icon i {
+    font-size: 24px;
+    color: var(--primary-blue);
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-info h3 {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.stat-desc {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+}
+
+/* Disposition des sections du dashboard */
+.dashboard-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.dashboard-col {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Répartition par corps */
+.corps-distribution {
+    margin-top: 15px;
+}
+
+.corps-bar {
+    margin-bottom: 20px;
+}
+
+.corps-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.corps-name i {
+    width: 16px;
+    margin-right: 8px;
+}
+
+.corps-name span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.corps-progress {
+    height: 24px;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.corps-progress-bar {
+    height: 100%;
+    border-radius: 6px;
+    position: relative;
+}
+
+.corps-progress-label {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.corps-count {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Couleurs pour les différents corps */
+.corps-direction {
+    background-color: #e74c3c; /* Rouge */
+}
+
+.corps-commandement {
+    background-color: #f39c12; /* Orange */
+}
+
+.corps-supervision {
+    background-color: #2ecc71; /* Vert */
+}
+
+.corps-executif {
+    background-color: #3498db; /* Bleu */
+}
+
+/* Annonces récentes */
+.recent-announcements {
+    margin-top: 15px;
+}
+
+.announcement {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.announcement:last-child {
+    border-bottom: none;
+}
+
+.announcement-date {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.announcement-text {
+    font-size: 14px;
+    color: #444;
+    margin: 0;
+}
+
+/* Liens rapides */
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.quick-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--dark-text);
+    transition: all 0.3s ease;
+}
+
+.quick-link:hover {
+    background-color: var(--primary-blue);
+    color: white;
+    transform: translateY(-5px);
+}
+
+.quick-link i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Media queries pour le responsive */
+@media (max-width: 992px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .dashboard-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-links {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .stat-value {
+        font-size: 24px;
+    }
+}
+
+/* Styles pour le système d'annonces */
+
+/* Styles pour les annonces */
+.recent-announcements {
+    margin-top: 15px;
+}
+
+.announcement {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.announcement:last-child {
+    border-bottom: none;
+}
+
+.announcement-date {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.announcement-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin: 0 0 5px 0;
+}
+
+.announcement-text {
+    font-size: 14px;
+    color: #444;
+    margin: 0;
+}
+
+/* Style pour le bouton d'ajout d'annonce */
+.add-announcement-btn {
+    margin-left: 10px;
+    background-color: transparent;
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+.add-announcement-btn:hover {
+    background-color: var(--primary-blue);
+    color: white;
+    transform: none;
+}
+
+/* Modal pour l'ajout d'annonce */
+.announcement-modal .modal-content {
+    max-width: 600px;
+}
+
+.announcement-modal textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Message pour absence d'annonces */
+.no-announcements {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+    font-style: italic;
+}
+
+/* Styles améliorés pour les annonces - problème de mise en forme résolu */
+
+/* Styles pour l'affichage des annonces */
+.announcement-text {
+    font-size: 14px;
+    color: #444;
+    margin: 0;
+    /* Ces propriétés garantissent que le texte reste dans son conteneur */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    /* Permettre au texte de se séparer sur plusieurs lignes */
+    white-space: normal;
+    /* Largeur maximale pour éviter les débordements */
+    max-width: 100%;
+    /* Ajouter une marge en bas pour la lisibilité */
+    margin-bottom: 5px;
+}
+
+/* Style pour la modal d'ajout d'annonce */
+.announcement-modal textarea {
+    resize: vertical;
+    min-height: 120px;
+    max-width: 100%;
+    /* S'assurer que les retours à la ligne sont visibles dans la zone de texte */
+    white-space: pre-wrap;
+}
+
+/* Meilleur espacement pour les annonces */
+.announcement {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.announcement:last-child {
+    border-bottom: none;
+}
+
+.announcement:hover {
+    background-color: #f8f9fa;
+}
+
+/* Styles pour le bouton de suppression d'annonce */
+
+/* En-tête de l'annonce avec date et bouton de suppression */
+.announcement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* La date reste inchangée mais sans margin-bottom pour s'aligner verticalement */
+.announcement-date {
+    font-size: 12px;
+    color: #888;
+    margin: 0;
+}
+
+/* Bouton de suppression */
+.btn-delete-announcement {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Effet au survol du bouton de suppression */
+.btn-delete-announcement:hover {
+    color: #e74c3c; /* Rouge pour indiquer la suppression */
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* Pour s'assurer que l'icône est bien centrée */
+.btn-delete-announcement i {
+    display: block;
+}
+
+/* Styles pour la page de contact */
+
+/* Section d'introduction */
+.contact-intro {
+    margin-bottom: 40px;
+}
+
+/* Sélecteur de service */
+.contact-selector {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.selector-title {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.selector-title h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 22px;
+}
+
+.selector-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 25px;
+}
+
+.selector-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.selector-option:hover {
+    border-color: var(--primary-blue);
+    background-color: rgba(10, 61, 98, 0.05);
+    transform: translateY(-3px);
+}
+
+.selector-option.active {
+    border-color: var(--primary-blue);
+    background-color: rgba(10, 61, 98, 0.1);
+    transform: translateY(-3px);
+}
+
+.option-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--light-blue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    color: var(--primary-blue);
+    font-size: 20px;
+}
+
+.option-content {
+    flex: 1;
+}
+
+.option-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    color: var(--primary-blue);
+}
+
+.option-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Formulaire de contact */
+.contact-forms {
+    margin-bottom: 40px;
+}
+
+.common-form-section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.common-form-section h2,
+.specific-form-section h2 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+    font-size: 22px;
+}
+
+.form-description {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+/* File upload styling */
+.file-upload-container {
+    margin-top: 10px;
+}
+
+.file-info {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #777;
+    font-style: italic;
+}
+
+.file-preview {
+    margin-top: 15px;
+    max-width: 300px;
+}
+
+.file-preview img {
+    max-width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Radio buttons styling */
+.radio-options {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-label input {
+    margin-right: 8px;
+}
+
+/* Section urgence */
+.emergency-contact {
+    margin-bottom: 40px;
+}
+
+.emergency-card {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 10px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.emergency-icon {
+    font-size: 40px;
+    color: #856404;
+    margin-right: 25px;
+}
+
+.emergency-content {
+    flex: 1;
+}
+
+.emergency-content h2 {
+    color: #856404;
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+}
+
+.emergency-number {
+    font-size: 32px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin: 15px 0;
+}
+
+.emergency-note {
+    font-style: italic;
+    color: #856404;
+    font-size: 14px;
+}
+
+/* Map section */
+.contact-map {
+    margin-bottom: 60px;
+}
+
+.contact-map h2 {
+    text-align: center;
+    color: var(--primary-blue);
+    margin-bottom: 30px;
+    font-family: var(--font-heading);
+}
+
+.map-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.map-location {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.location-content {
+    flex: 1;
+    min-width: 300px;
+    padding: 30px;
+}
+
+.location-content h3 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-family: var(--font-heading);
+}
+
+.location-content address {
+    font-style: normal;
+    line-height: 1.8;
+}
+
+.location-content address p {
+    margin-bottom: 10px;
+}
+
+.location-content address p i,
+.hours i {
+    width: 20px;
+    color: var(--primary-blue);
+    margin-right: 8px;
+}
+
+.hours {
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.location-image {
+    flex: 1;
+    min-width: 300px;
+    min-height: 300px;
+    background-color: #f5f5f5;
+    overflow: hidden;
+}
+
+.location-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* PPA specific styling */
+.ppa-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid var(--primary-blue);
+}
+
+/* Specific form sections */
+.specific-form-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+
+/* Status messages */
+.form-status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.form-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    display: block;
+}
+
+.form-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    display: block;
+}
+
+.form-status.loading {
+    background-color: #e9ecef;
+    color: #495057;
+    display: block;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .selector-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-location {
+        flex-direction: column;
+    }
+    
+    .emergency-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .emergency-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .common-form-section {
+        padding: 20px;
+    }
+    
+    .radio-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

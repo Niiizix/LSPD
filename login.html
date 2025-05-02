@@ -1,0 +1,110 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès Agent - LSPD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <p><strong>AVERTISSEMENT :</strong> Ce site est destiné au RP (Roleplay) dans le cadre du jeu GTA et n'a aucune valeur légale.</p>
+    </div>
+    
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="imgs/logo.webp" alt="Logo LSPD" />
+                <div class="logo-text">
+                    <h1>LSPD</h1>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="departement.html">À propos</a></li>
+                    <li><a href="officiers.html">Officiers</a></li>
+                    <li><a href="recrutement.html">Recrutement</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="login-button">
+                <a href="login.html" class="btn btn-login active"><i class="fas fa-user-shield"></i> Accès Agent</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="login-section">
+            <div class="login-container">
+                <div class="login-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>Accès Sécurisé</h1>
+                    <p>Portail des agents du LSPD</p>
+                </div>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="badge"><i class="fas fa-id-badge"></i> Numéro de Badge</label>
+                        <input type="text" id="badge" name="badge" placeholder="Entrez votre numéro de badge" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accessCode"><i class="fas fa-key"></i> Code d'accès</label>
+                        <input type="password" id="accessCode" name="accessCode" placeholder="Entrez votre code d'accès" required>
+                    </div>
+                    
+                    <div class="login-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+                    </div>
+                    
+                    <div id="loginMessage" class="login-message"></div>
+                </form>
+                
+                <div class="login-help">
+                    <p>Problème de connexion ? Contactez votre supérieur hiérarchique.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>LSPD</h3>
+                <ul>
+                    <li><a href="departement.html">À propos</a></li>
+                    <li><a href="officiers.html">Organigramme</a></li>
+                    <li><a href="recrutement.html">Recrutements</a></li>
+                    <li><a href="https://discord.com/channels/1317606347646439544/1317606348137173110" target="_blank">Annonces</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="#">Code pénal</a></li>
+                    <li><a href="#">PPA</a></li>
+                    <li><a href="https://discord.gg/PgEhgymjps" target="_blank">Red One FA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-phone"></i> Urgence: 911</a></li>
+                    <li><a href="#"><i class="fas fa-building"></i> Central LSPD</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contact@lspd.ls</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Los Santos Police Department. Tous droits réservés.</p>
+            <p class="rp-disclaimer">Ce site est créé uniquement pour le RP (Roleplay) dans GTA. Il n'a aucune affiliation avec des services de police réels et n'a aucune valeur légale.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

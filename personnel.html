@@ -1,0 +1,461 @@
+<!-- personnel.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personnel - LSPD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <p><strong>AVERTISSEMENT :</strong> Ce site est destiné au RP (Roleplay) dans le cadre du jeu GTA et n'a aucune valeur légale.</p>
+    </div>
+    
+    <header class="agent-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="imgs/logo.webp" alt="Logo LSPD" />
+                <div class="logo-text">
+                    <h1>LSPD</h1>
+                </div>
+            </div>
+            <div class="agent-info" id="agentInfoHeader">
+                <!-- Les informations de l'agent seront injectées ici via JavaScript -->
+            </div>
+            <div class="logout-button">
+                <button id="logoutBtn" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="agent-nav">
+        <div class="nav-container">
+            <ul>
+                <li><a href="agent-dashboard.html" data-access-level="1"><i class="fas fa-home"></i> Tableau de bord</a></li>
+                <li><a href="rapports-ois.html" data-access-level="1"><i class="fas fa-clipboard-list"></i> Rapports OIS</a></li>
+                <li><a href="personnel.html" class="active" data-access-level="1"><i class="fas fa-users"></i> Personnel</a></li>
+                <li><a href="parametres.html" data-access-level="4"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="agent-main">
+        <div class="dashboard-container">
+            <h1 class="dashboard-title">Personnel du LSPD</h1>
+            <p class="section-description">Liste de tous les agents en service au département.</p>
+            
+            <!-- Bouton d'ajout d'agent (visible uniquement pour le corps de commandement et plus) -->
+            <div id="adminActions" class="admin-actions" style="display: none;">
+                <button id="addAgentBtn" class="btn btn-primary"><i class="fas fa-user-plus"></i> Ajouter un agent</button>
+            </div>
+            
+            <!-- Modal pour ajouter un agent -->
+            <div id="addAgentModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Ajouter un nouvel agent</h2>
+                    
+                    <form id="addAgentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newPrenom">Prénom</label>
+                                <input type="text" id="newPrenom" name="newPrenom" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newNom">Nom</label>
+                                <input type="text" id="newNom" name="newNom" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newGrade">Grade</label>
+                                <select id="newGrade" name="newGrade" required>
+                                    <option value="">Sélectionner un grade</option>
+                                    <!-- Les grades seront injectés ici via JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="newDivision">Division</label>
+                                <input type="text" id="newDivision" name="newDivision" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newMatricule">Matricule</label>
+                                <input type="text" id="newMatricule" name="newMatricule" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newBadge">Numéro de Badge</label>
+                                <input type="text" id="newBadge" name="newBadge" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newCode">Code d'accès</label>
+                            <input type="password" id="newCode" name="newCode" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Ajouter l'agent</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Modal pour modifier un agent -->
+            <div id="editAgentModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal edit-close">&times;</span>
+                    <h2>Modifier les informations de l'agent</h2>
+                    
+                    <form id="editAgentForm">
+                        <input type="hidden" id="originalMatricule" name="originalMatricule">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editPrenom">Prénom</label>
+                                <input type="text" id="editPrenom" name="editPrenom" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editNom">Nom</label>
+                                <input type="text" id="editNom" name="editNom" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editGrade">Grade</label>
+                                <select id="editGrade" name="editGrade" required>
+                                    <option value="">Sélectionner un grade</option>
+                                    <!-- Les grades seront injectés ici via JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="editDivision">Division</label>
+                                <input type="text" id="editDivision" name="editDivision" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editMatricule">Matricule</label>
+                                <input type="text" id="editMatricule" name="editMatricule" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editBadge">Numéro de Badge</label>
+                                <input type="text" id="editBadge" name="editBadge" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="editCodeGroup">
+                            <label for="editCode">Code d'accès</label>
+                            <input type="password" id="editCode" name="editCode" placeholder="Laisser vide pour ne pas modifier">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Liste du personnel -->
+            <div class="table-responsive">
+                <table class="personnel-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Grade</th>
+                            <th>Matricule</th>
+                            <th>Badge</th>
+                            <th>Division</th>
+                            <th id="actionsHeader" style="visibility: hidden;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="personnelTableBody">
+                        <!-- Les membres du personnel seront insérés ici via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>LSPD</h3>
+                <ul>
+                    <li><a href="index.html">Site public</a></li>
+                    <li><a href="#">Nos services</a></li>
+                    <li><a href="#">Organigramme</a></li>
+                    <li><a href="#">Archives</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="#">Code pénal</a></li>
+                    <li><a href="#">Formulaires</a></li>
+                    <li><a href="#">Procédures</a></li>
+                    <li><a href="#">Support technique</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-headset"></i> Support interne</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Manuel d'utilisation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Los Santos Police Department. Système interne.</p>
+            <p class="rp-disclaimer">Ce site est créé uniquement pour le RP (Roleplay) dans GTA. Il n'a aucune affiliation avec des services de police réels et n'a aucune valeur légale.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer l'utilisateur connecté
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+            
+            console.log("Page Personnel - Utilisateur connecté:", currentUser.prenom, currentUser.nom);
+            console.log("Grade:", currentUser.grade, "- Niveau d'accès:", currentUser.accessLevel);
+            
+            // Récupérer les éléments de la page
+            const adminActions = document.getElementById('adminActions');
+            const addAgentBtn = document.getElementById('addAgentBtn');
+            const addAgentModal = document.getElementById('addAgentModal');
+            const editAgentModal = document.getElementById('editAgentModal');
+            const addAgentForm = document.getElementById('addAgentForm');
+            const editAgentForm = document.getElementById('editAgentForm');
+            const personnelTableBody = document.getElementById('personnelTableBody');
+            const actionsHeader = document.getElementById('actionsHeader');
+            const editCodeGroup = document.getElementById('editCodeGroup');
+            
+            // Récupérer les boutons de fermeture des modals
+            const closeAddModalBtn = addAgentModal.querySelector('.close-modal');
+            const closeEditModalBtn = editAgentModal.querySelector('.edit-close');
+            
+            // Gérer les affichages en fonction du niveau d'accès
+            if (currentUser.accessLevel >= 3) { // Corps de commandement et plus
+                console.log("Niveau d'accès suffisant pour modifier le personnel");
+                adminActions.style.display = 'block';
+                actionsHeader.style.visibility = 'visible';
+            } else {
+                console.log("Niveau d'accès insuffisant pour modifier le personnel");
+                adminActions.style.display = 'none';
+                actionsHeader.style.visibility = 'hidden';
+            }
+            
+            // Afficher/masquer le champ de code d'accès pour l'édition en fonction du niveau d'accès
+            if (currentUser.accessLevel < 4) { // Inférieur au corps de direction
+                console.log("Niveau d'accès insuffisant pour voir/modifier les codes d'accès");
+                editCodeGroup.style.display = 'none';
+            } else {
+                console.log("Niveau d'accès suffisant pour voir/modifier les codes d'accès");
+            }
+            
+            // Remplir les sélecteurs de grade
+            const gradeSelectors = document.querySelectorAll('#newGrade, #editGrade');
+            gradeSelectors.forEach(selector => {
+                hierarchyRanks.forEach(rank => {
+                    const option = document.createElement('option');
+                    option.value = rank;
+                    option.textContent = rank;
+                    selector.appendChild(option);
+                });
+            });
+            
+            // Charger la liste du personnel
+            updatePersonnelList();
+            
+            // Ouvrir le modal d'ajout
+            addAgentBtn.addEventListener('click', function() {
+                addAgentModal.style.display = "block";
+            });
+            
+            // Fermer les modals
+            closeAddModalBtn.addEventListener('click', function() {
+                addAgentModal.style.display = "none";
+            });
+            
+            closeEditModalBtn.addEventListener('click', function() {
+                editAgentModal.style.display = "none";
+            });
+            
+            // Fermer les modals en cliquant à l'extérieur
+            window.addEventListener('click', function(event) {
+                if (event.target === addAgentModal) {
+                    addAgentModal.style.display = "none";
+                }
+                if (event.target === editAgentModal) {
+                    editAgentModal.style.display = "none";
+                }
+            });
+            
+            // Soumission du formulaire d'ajout
+            addAgentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newAgent = {
+                    prenom: document.getElementById('newPrenom').value,
+                    nom: document.getElementById('newNom').value,
+                    grade: document.getElementById('newGrade').value,
+                    matricule: document.getElementById('newMatricule').value,
+                    badge: document.getElementById('newBadge').value,
+                    division: document.getElementById('newDivision').value,
+                    code: document.getElementById('newCode').value
+                };
+                
+                console.log("Tentative d'ajout d'un nouvel agent:", newAgent.prenom, newAgent.nom);
+                const result = addPersonnel(newAgent);
+                
+                if (result.success) {
+                    console.log("Agent ajouté avec succès:", newAgent.matricule);
+                    alert(result.message);
+                    addAgentForm.reset();
+                    addAgentModal.style.display = "none";
+                    updatePersonnelList();
+                } else {
+                    console.error("Échec de l'ajout de l'agent:", result.message);
+                    alert(result.message);
+                }
+            });
+            
+            // Soumission du formulaire de modification
+            editAgentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const originalMatricule = document.getElementById('originalMatricule').value;
+                const updatedData = {
+                    prenom: document.getElementById('editPrenom').value,
+                    nom: document.getElementById('editNom').value,
+                    grade: document.getElementById('editGrade').value,
+                    matricule: document.getElementById('editMatricule').value,
+                    badge: document.getElementById('editBadge').value,
+                    division: document.getElementById('editDivision').value
+                };
+                
+                // Ajouter le code seulement s'il est rempli et que l'utilisateur a le niveau d'accès requis
+                const codeInput = document.getElementById('editCode');
+                if (currentUser.accessLevel >= 4 && codeInput.value.trim() !== '') {
+                    updatedData.code = codeInput.value;
+                    console.log("Modification du code d'accès autorisée");
+                }
+                
+                console.log("Tentative de modification de l'agent:", originalMatricule);
+                console.log("Nouvelles données:", updatedData);
+                
+                const result = updatePersonnel(originalMatricule, updatedData);
+                
+                if (result.success) {
+                    console.log("Agent modifié avec succès:", originalMatricule, "->", updatedData.matricule);
+                    alert(result.message);
+                    editAgentModal.style.display = "none";
+                    updatePersonnelList();
+                } else {
+                    console.error("Échec de la modification de l'agent:", result.message);
+                    alert(result.message);
+                }
+            });
+            
+            // Fonction pour mettre à jour la liste du personnel
+            function updatePersonnelList() {
+                console.log("Mise à jour de la liste du personnel");
+                const personnel = getPersonnel();
+                personnelTableBody.innerHTML = '';
+                
+                personnel.forEach(agent => {
+                    const row = document.createElement('tr');
+                    
+                    // Création des cellules avec les informations de base (visibles par tous)
+                    row.innerHTML = `
+                        <td>${agent.nom}</td>
+                        <td>${agent.prenom}</td>
+                        <td>${agent.grade}</td>
+                        <td>${agent.matricule}</td>
+                        <td>${agent.badge}</td>
+                        <td>${agent.division}</td>
+                    `;
+                    
+                    // Ajouter la cellule d'actions seulement pour les utilisateurs autorisés
+                    if (currentUser.accessLevel >= 3) {
+                        const actionsCell = document.createElement('td');
+                        actionsCell.className = 'actions-cell';
+                        
+                        // Bouton d'édition
+                        const editBtn = document.createElement('button');
+                        editBtn.className = 'btn btn-small btn-edit';
+                        editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                        editBtn.title = "Modifier";
+                        editBtn.addEventListener('click', function() {
+                            openEditModal(agent);
+                        });
+                        actionsCell.appendChild(editBtn);
+                        
+                        // Bouton de suppression
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'btn btn-small btn-delete';
+                        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                        deleteBtn.title = "Supprimer";
+                        deleteBtn.addEventListener('click', function() {
+                            if (confirm(`Êtes-vous sûr de vouloir supprimer ${agent.prenom} ${agent.nom} du personnel ?`)) {
+                                console.log("Tentative de suppression de l'agent:", agent.matricule);
+                                const result = deletePersonnel(agent.matricule);
+                                if (result.success) {
+                                    console.log("Agent supprimé avec succès:", agent.matricule);
+                                    alert(result.message);
+                                    updatePersonnelList();
+                                } else {
+                                    console.error("Échec de la suppression de l'agent:", result.message);
+                                    alert(result.message);
+                                }
+                            }
+                        });
+                        actionsCell.appendChild(deleteBtn);
+                        
+                        row.appendChild(actionsCell);
+                    } else {
+                        // Si l'utilisateur n'a pas accès aux actions, on ajoute quand même une cellule vide
+                        // pour conserver l'alignement du tableau
+                        const emptyCell = document.createElement('td');
+                        row.appendChild(emptyCell);
+                    }
+                    
+                    personnelTableBody.appendChild(row);
+                });
+                
+                console.log("Liste du personnel mise à jour avec", personnel.length, "agents");
+            }
+            
+            // Fonction pour ouvrir le modal d'édition
+            function openEditModal(agent) {
+                console.log("Ouverture du modal d'édition pour l'agent:", agent.matricule);
+                document.getElementById('originalMatricule').value = agent.matricule;
+                document.getElementById('editPrenom').value = agent.prenom;
+                document.getElementById('editNom').value = agent.nom;
+                document.getElementById('editGrade').value = agent.grade;
+                document.getElementById('editMatricule').value = agent.matricule;
+                document.getElementById('editBadge').value = agent.badge;
+                document.getElementById('editDivision').value = agent.division;
+                document.getElementById('editCode').value = '';
+                
+                editAgentModal.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>

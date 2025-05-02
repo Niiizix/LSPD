@@ -1,0 +1,260 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - LSPD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <p><strong>AVERTISSEMENT :</strong> Ce site est destiné au RP (Roleplay) dans le cadre du jeu GTA et n'a aucune valeur légale.</p>
+    </div>
+    
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="imgs/logo.webp" alt="Logo LSPD" />
+                <div class="logo-text">
+                    <h1>LSPD</h1>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="departement.html">À propos</a></li>
+                    <li><a href="officiers.html">Officiers</a></li>
+                    <li><a href="recrutement.html">Recrutement</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="login-button">
+                <a href="login.html" class="btn btn-login"><i class="fas fa-user-shield"></i> Accès Agent</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <h1>Contactez-nous</h1>
+            <p>Comment pouvons-nous vous aider ?</p>
+        </section>
+
+        <section class="contact-intro">
+            <div class="intro-container">
+                <p>Le Los Santos Police Department met à votre disposition plusieurs services pour répondre à vos besoins. Veuillez sélectionner le service approprié selon la nature de votre demande :</p>
+            </div>
+        </section>
+
+        <section class="contact-options">
+            <div class="contact-selector">
+                <div class="selector-title">
+                    <h2>Sélectionnez un service</h2>
+                </div>
+                <div class="selector-options">
+                    <div class="selector-option" data-target="direction">
+                        <div class="option-icon"><i class="fas fa-building"></i></div>
+                        <div class="option-content">
+                            <h3>Direction du LSPD</h3>
+                            <p>Pour toute plainte contre un agent, demande de rendez-vous ou autre requête administrative.</p>
+                        </div>
+                    </div>
+                    <div class="selector-option" data-target="plaintes">
+                        <div class="option-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="option-content">
+                            <h3>Service des Plaintes</h3>
+                            <p>Pour déposer une plainte concernant un délit ou un crime dont vous avez été victime.</p>
+                        </div>
+                    </div>
+                    <div class="selector-option" data-target="ppa">
+                        <div class="option-icon"><i class="fas fa-id-card"></i></div>
+                        <div class="option-content">
+                            <h3>Service des PPA</h3>
+                            <p>Pour toute demande de Permis de Port d'Arme (PPA).</p>
+                        </div>
+                    </div>
+                    <div class="selector-option" data-target="casier">
+                        <div class="option-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="option-content">
+                            <h3>Extrait de Casier Judiciaire</h3>
+                            <p>Pour demander une copie de votre extrait de casier judiciaire.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulaires de contact pour chaque service -->
+        <section class="contact-forms">
+            <!-- Formulaire commun pour les informations personnelles -->
+            <div class="common-form-section">
+                <h2>Vos informations personnelles</h2>
+                <p class="form-description">Ces informations sont nécessaires pour traiter votre demande, quel que soit le service concerné.</p>
+                
+                <form id="contactForm" enctype="multipart/form-data">
+                    <input type="hidden" id="formType" name="formType" value="">
+                    
+                    <div class="form-group">
+                        <label for="discord">Discord</label>
+                        <input type="text" id="discord" name="discord" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="idCard">Photo de votre carte d'identité</label>
+                        <div class="file-upload-container">
+                            <input type="file" id="idCard" name="idCard" accept=".jpg,.jpeg,.png,.webp" required>
+                            <div class="file-preview" id="idCardPreview"></div>
+                        </div>
+                        <p class="file-info">Formats acceptés : JPG, PNG, WEBP. Taille max : 5 MB</p>
+                    </div>
+                    
+                    <!-- Section spécifique Direction -->
+                    <div class="specific-form-section" id="direction-section" style="display: none;">
+                        <h2>Contact avec la Direction</h2>
+                        <div class="form-group">
+                            <label for="directionReason">Raison détaillée de votre demande</label>
+                            <textarea id="directionReason" name="directionReason" rows="5"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Section spécifique Plaintes -->
+                    <div class="specific-form-section" id="plaintes-section" style="display: none;">
+                        <h2>Dépôt de Plainte</h2>
+                        <div class="form-group">
+                            <label for="plainteResume">Résumé des faits</label>
+                            <textarea id="plainteResume" name="plainteResume" rows="5"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Avez-vous l'identité de la personne contre qui vous portez plainte ?</label>
+                            <div class="radio-options">
+                                <label class="radio-label">
+                                    <input type="radio" name="knowSuspect" value="oui" onchange="toggleSuspectInfo()"> Oui
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="knowSuspect" value="non" onchange="toggleSuspectInfo()" checked> Non
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="suspectInfo" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="suspectNom">Nom du suspect</label>
+                                    <input type="text" id="suspectNom" name="suspectNom">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="suspectPrenom">Prénom du suspect</label>
+                                    <input type="text" id="suspectPrenom" name="suspectPrenom">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section spécifique PPA -->
+                    <div class="specific-form-section" id="ppa-section" style="display: none;">
+                        <h2>Demande de Permis de Port d'Arme</h2>
+                        <p class="ppa-info">Votre demande sera traitée par nos services. Un agent vous contactera pour planifier un rendez-vous afin d'évaluer votre demande.</p>
+                    </div>
+                    
+                    <!-- Section spécifique Casier -->
+                    <div class="specific-form-section" id="casier-section" style="display: none;">
+                        <h2>Demande d'Extrait de Casier Judiciaire</h2>
+                        <div class="form-group">
+                            <label for="casierReason">Raison de votre demande</label>
+                            <textarea id="casierReason" name="casierReason" rows="5"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+                    </div>
+                    
+                    <div id="formStatus" class="form-status"></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="emergency-contact">
+            <div class="emergency-card">
+                <div class="emergency-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="emergency-content">
+                    <h2>En cas d'urgence</h2>
+                    <p>Pour toute situation nécessitant une intervention immédiate des forces de l'ordre, veuillez composer le :</p>
+                    <div class="emergency-number">911</div>
+                    <p class="emergency-note">Ne pas utiliser ce numéro pour des demandes non-urgentes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-map">
+            <h2>Nous trouver</h2>
+            <div class="map-container">
+                <div class="map-location">
+                    <div class="location-content">
+                        <h3>Quartier Général du LSPD</h3>
+                        <address>
+                            <p><i class="fas fa-map-marker-alt"></i> Mission Row, Los Santos</p>
+                            <p><i class="fas fa-phone"></i> Non-urgence: 311</p>
+                            <p><i class="fas fa-envelope"></i> contact@lspd.ls</p>
+                        </address>
+                        <p class="hours">
+                            <i class="fas fa-clock"></i> Ouvert 24/7
+                        </p>
+                    </div>
+                    <div class="location-image">
+                        <img src="imgs/logo.webp" alt="LSPD Headquarters" onerror="this.src='imgs/default.jpg'; this.onerror=null;">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>LSPD</h3>
+                <ul>
+                    <li><a href="departement.html">À propos</a></li>
+                    <li><a href="officiers.html">Organigramme</a></li>
+                    <li><a href="recrutement.html">Recrutements</a></li>
+                    <li><a href="https://discord.com/channels/1317606347646439544/1317606348137173110" target="_blank">Annonces</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="#">Code pénal</a></li>
+                    <li><a href="#">PPA</a></li>
+                    <li><a href="https://discord.gg/PgEhgymjps" target="_blank">Red One FA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-phone"></i> Urgence: 911</a></li>
+                    <li><a href="#"><i class="fas fa-building"></i> Central LSPD</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contact@lspd.ls</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Los Santos Police Department. Tous droits réservés.</p>
+            <p class="rp-disclaimer">Ce site est créé uniquement pour le RP (Roleplay) dans GTA. Il n'a aucune affiliation avec des services de police réels et n'a aucune valeur légale.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
