@@ -37,6 +37,7 @@
                 <li><a href="agent-dashboard.html" class="active" data-access-level="1"><i class="fas fa-home"></i> Tableau de bord</a></li>
                 <li><a href="rapports-ois.html" data-access-level="1"><i class="fas fa-clipboard-list"></i> Rapports OIS</a></li>
                 <li><a href="personnel.html" data-access-level="1"><i class="fas fa-users"></i> Personnel</a></li>
+                <li><a href="service.html" data-access-level="3"><i class="fas fa-clock"></i> Heures de Service</a></li>
                 <li><a href="parametres.html" data-access-level="4"><i class="fas fa-cog"></i> Paramètres</a></li>
             </ul>
         </div>
@@ -94,6 +95,171 @@
                 </div>
             </div>
             
+            <!-- Section Bouton de Service -->
+            <div class="service-section">
+                <h2><i class="fas fa-clock"></i> Mon service</h2>
+                <div class="service-button-container">
+                    <button id="serviceButton" class="btn btn-service" data-state="inactive">
+                        <i class="fas fa-play"></i> Prendre son service
+                    </button>
+                    <div id="currentServiceTime" class="current-time" style="display: none;">
+                        <p>Service en cours : <span id="serviceTimer">0h 0m</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ajouter ce code au script existant dans agent-dashboard.html -->
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Code existant...
+    
+                // Système de service - nouvelle fonctionnalité
+                initializeServiceSystem();
+            });
+
+            function initializeServiceSystem() {
+                const serviceButton = document.getElementById('serviceButton');
+                const currentServiceTime = document.getElementById('currentServiceTime');
+                const serviceTimer = document.getElementById('serviceTimer');
+                const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    
+                if (!currentUser) return;
+    
+                // Récupérer l'état du service actuel
+                const serviceState = getServiceState(currentUser.matricule);
+                updateServiceButtonDisplay(serviceState);
+    
+                serviceButton.addEventListener('click', function() {
+                    const state = serviceButton.getAttribute('data-state');
+                    
+                    if (state === 'inactive') {
+                        startService(currentUser);
+                    } else {
+                        endService(currentUser);
+                    }
+                });
+                
+                // Mettre à jour le timer si en service
+                if (serviceButton.getAttribute('data-state') === 'active') {
+                    startTimer();
+                }
+            }
+
+            function getServiceState(matricule) {
+                const serviceData = JSON.parse(localStorage.getItem('serviceData') || '{}');
+                return serviceData[matricule] || { status: 'inactive' };
+            }
+
+            function startService(user) {
+                const serviceData = JSON.parse(localStorage.getItem('serviceData') || '{}');
+                const now = new Date();
+                
+                serviceData[user.matricule] = {
+                    status: 'active',
+                    startTime: now.toISOString(),
+                    agent: {
+                        nom: user.nom,
+                        prenom: user.prenom,
+                        matricule: user.matricule,
+                        grade: user.grade
+                    }
+                };
+                
+                localStorage.setItem('serviceData', JSON.stringify(serviceData));
+                updateServiceButtonDisplay({ status: 'active' });
+                startTimer();
+                
+                console.log(`${user.grade} ${user.prenom} ${user.nom} a pris son service à ${now.toLocaleTimeString()}`);
+            }
+
+            function endService(user) {
+                const serviceData = JSON.parse(localStorage.getItem('serviceData') || '{}');
+                const userData = serviceData[user.matricule];
+                
+                if (!userData || userData.status !== 'active') return;
+                
+                const startTime = new Date(userData.startTime);
+                const endTime = new Date();
+                const duration = endTime - startTime;
+                
+                // Sauvegarder l'historique
+                const history = JSON.parse(localStorage.getItem('serviceHistory') || '{}');
+                if (!history[user.matricule]) {
+                    history[user.matricule] = {
+                        totalHours: 0,
+                        services: []
+                    };
+                }
+                
+                const hours = duration / (1000 * 60 * 60);
+                history[user.matricule].totalHours += hours;
+                history[user.matricule].services.push({
+                    start: startTime.toISOString(),
+                    end: endTime.toISOString(),
+                    duration: hours
+                });
+                
+                // Mettre à jour l'état
+                serviceData[user.matricule] = { status: 'inactive' };
+                
+                localStorage.setItem('serviceData', JSON.stringify(serviceData));
+                localStorage.setItem('serviceHistory', JSON.stringify(history));
+                
+                updateServiceButtonDisplay({ status: 'inactive' });
+                stopTimer();
+                
+                console.log(`${user.grade} ${user.prenom} ${user.nom} a terminé son service après ${formatTime(hours)}`);
+            }
+
+            function updateServiceButtonDisplay(state) {
+                const serviceButton = document.getElementById('serviceButton');
+                const currentServiceTime = document.getElementById('currentServiceTime');
+                
+                if (state.status === 'active') {
+                    serviceButton.className = 'btn btn-service btn-end-service';
+                    serviceButton.innerHTML = '<i class="fas fa-stop"></i> Terminer son service';
+                    serviceButton.setAttribute('data-state', 'active');
+                    currentServiceTime.style.display = 'block';
+                } else {
+                    serviceButton.className = 'btn btn-service btn-start-service';
+                    serviceButton.innerHTML = '<i class="fas fa-play"></i> Prendre son service';
+                    serviceButton.setAttribute('data-state', 'inactive');
+                    currentServiceTime.style.display = 'none';
+                }
+            }
+
+            let timerInterval;
+
+            function startTimer() {
+                const serviceButton = document.getElementById('serviceButton');
+                const serviceTimer = document.getElementById('serviceTimer');
+                const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                const serviceData = JSON.parse(localStorage.getItem('serviceData') || '{}');
+                const startTime = new Date(serviceData[currentUser.matricule].startTime);
+                
+                clearInterval(timerInterval);
+                
+                timerInterval = setInterval(() => {
+                    const now = new Date();
+                    const duration = now - startTime;
+                    const hours = Math.floor(duration / (1000 * 60 * 60));
+                    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                    
+                    serviceTimer.textContent = `${hours}h ${minutes}m`;
+                }, 1000);
+            }
+
+            function stopTimer() {
+                clearInterval(timerInterval);
+            }
+
+            function formatTime(hours) {
+                const h = Math.floor(hours);
+                const m = Math.floor((hours - h) * 60);
+                return `${h}h ${m}m`;
+            }
+            </script>
+
             <div class="dashboard-row">
                 <div class="dashboard-col">
                     <div class="dashboard-card">
