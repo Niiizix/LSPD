@@ -2838,6 +2838,9 @@ select:focus {
     font-weight: 600;
     min-width: 200px;
     transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .btn-start-service {
@@ -2866,7 +2869,7 @@ select:focus {
     color: #666;
 }
 
-/* Styles pour la page Service avec quotas */
+/* Styles pour la page Service */
 .service-stats {
     margin-top: 30px;
 }
@@ -3011,6 +3014,31 @@ select:focus {
 .no-service-message p {
     color: #666;
     font-size: 16px;
+}
+
+/* Styles manquants qui pourraient causer des problèmes */
+#serviceButton {
+    display: inline-block;
+    background-color: var(--accent-blue);
+    color: var(--light-text);
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+#serviceButton i {
+    margin-right: 5px;
+}
+
+#serviceTimer {
+    font-weight: bold;
 }
 
 /* Responsive styles */
