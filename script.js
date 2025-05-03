@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Pour les pages nécessitant une authentification
-    const restrictedPages = ['agent-dashboard.html', 'rapports-ois.html', 'personnel.html', 'parametres.html'];
+    const restrictedPages = ['agent-dashboard.html', 'rapports-ois.html', 'personnel.html', 'service.html', 'parametres.html'];
     const currentPage = window.location.pathname.split('/').pop();
     
     if (restrictedPages.includes(currentPage)) {
@@ -626,12 +626,12 @@ function createOfficerCard(agent, corps) {
     }
     
     // Chemin de l'image basé sur le numéro de badge
-    const imagePath = `imgs/${agent.badge}.webp`;
+    const imagePath = `imgs/${agent.badge}.jpg`;
     
     // Contenu HTML de la carte
     officerCard.innerHTML = `
         <div class="officer-photo">
-            <img src="${imagePath}" alt="${agent.grade} ${agent.prenom} ${agent.nom}" onerror="this.src='imgs/default.webp'; this.onerror=null;">
+            <img src="${imagePath}" alt="${agent.grade} ${agent.prenom} ${agent.nom}" onerror="this.src='imgs/default.jpg'; this.onerror=null;">
             <div class="officer-info">
                 <div class="officer-name">${agent.prenom} ${agent.nom}</div>
                 <div class="officer-details">
@@ -741,6 +741,7 @@ function updateReportStats() {
 }
 
 // Mettre à jour la répartition par corps
+
 function updateCorpsDistribution(users) {
     const corpsDistributionElement = document.getElementById('corpsDistribution');
     if (!corpsDistributionElement) return;
@@ -772,54 +773,41 @@ function updateCorpsDistribution(users) {
     // Vider le conteneur
     corpsDistributionElement.innerHTML = '';
     
-    // Créer une barre pour chaque corps
+    // Créer une simple liste pour chaque corps
     corpsOrder.forEach(corps => {
         const count = corpsCounts[corps];
-        const total = users.length;
-        const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
         
-        // Déterminer la classe CSS et l'icône pour ce corps
-        let corpsClass, corpsIcon;
-        
+        // Déterminer l'icône pour ce corps
+        let corpsIcon;
         switch(corps) {
             case "Corps de direction":
-                corpsClass = "corps-direction";
                 corpsIcon = "fas fa-star";
                 break;
             case "Corps de commandement":
-                corpsClass = "corps-commandement";
                 corpsIcon = "fas fa-chess-queen";
                 break;
             case "Corps de supervision":
-                corpsClass = "corps-supervision";
                 corpsIcon = "fas fa-user-tie";
                 break;
             case "Corps exécutif":
-                corpsClass = "corps-executif";
                 corpsIcon = "fas fa-user-shield";
                 break;
             default:
-                corpsClass = "";
                 corpsIcon = "fas fa-user";
         }
         
-        // Créer la barre pour ce corps
-        const corpsBar = document.createElement('div');
-        corpsBar.className = 'corps-bar';
-        corpsBar.innerHTML = `
-            <div class="corps-name">
+        // Créer l'élément simplifié pour ce corps
+        const corpsItem = document.createElement('div');
+        corpsItem.className = 'corps-item';
+        corpsItem.innerHTML = `
+            <div class="corps-info">
                 <i class="${corpsIcon}"></i>
-                <span>${corps}</span>
-            </div>
-            <div class="corps-progress">
-                <div class="corps-progress-bar ${corpsClass}" style="width: ${percentage}%">
-                    <span class="corps-count">${count} agents</span>
-                    <span class="corps-progress-label">${percentage}%</span>
-                </div>
+                <span class="corps-label">${corps}</span>
+                <span class="corps-count">${count} agent${count > 1 ? 's' : ''}</span>
             </div>
         `;
         
-        corpsDistributionElement.appendChild(corpsBar);
+        corpsDistributionElement.appendChild(corpsItem);
     });
 }
 
