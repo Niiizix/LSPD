@@ -1,0 +1,226 @@
+<!-- service.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heures de Service - LSPD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="disclaimer-banner">
+        <p><strong>AVERTISSEMENT :</strong> Ce site est destiné au RP (Roleplay) dans le cadre du jeu GTA et n'a aucune valeur légale.</p>
+    </div>
+    
+    <header class="agent-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="imgs/logo.webp" alt="Logo LSPD" />
+                <div class="logo-text">
+                    <h1>LSPD</h1>
+                </div>
+            </div>
+            <div class="agent-info" id="agentInfoHeader">
+                <!-- Les informations de l'agent seront injectées ici via JavaScript -->
+            </div>
+            <div class="logout-button">
+                <button id="logoutBtn" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="agent-nav">
+        <div class="nav-container">
+            <ul>
+                <li><a href="agent-dashboard.html" data-access-level="1"><i class="fas fa-home"></i> Tableau de bord</a></li>
+                <li><a href="rapports-ois.html" data-access-level="1"><i class="fas fa-clipboard-list"></i> Rapports OIS</a></li>
+                <li><a href="personnel.html" data-access-level="1"><i class="fas fa-users"></i> Personnel</a></li>
+                <li><a href="service.html" class="active" data-access-level="3"><i class="fas fa-clock"></i> Heures de Service</a></li>
+                <li><a href="parametres.html" data-access-level="4"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="agent-main">
+        <div class="dashboard-container">
+            <h1 class="dashboard-title">Heures de Service</h1>
+            <p class="section-description">Suivi des heures de service des agents</p>
+            
+            <div class="service-stats">
+                <div class="service-cards" id="serviceCards">
+                    <!-- Les cartes des agents seront générées ici via JavaScript -->
+                </div>
+            </div>
+            
+            <div id="noServiceData" class="no-service-message" style="display: none;">
+                <i class="fas fa-clock"></i>
+                <h2>Aucune donnée de service disponible</h2>
+                <p>Aucun agent n'a encore commencé à enregistrer ses heures de service.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>LSPD</h3>
+                <ul>
+                    <li><a href="index.html">Site public</a></li>
+                    <li><a href="#">Nos services</a></li>
+                    <li><a href="#">Organigramme</a></li>
+                    <li><a href="#">Archives</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="#">Code pénal</a></li>
+                    <li><a href="#">Formulaires</a></li>
+                    <li><a href="#">Procédures</a></li>
+                    <li><a href="#">Support technique</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-headset"></i> Support interne</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Manuel d'utilisation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Los Santos Police Department. Système interne.</p>
+            <p class="rp-disclaimer">Ce site est créé uniquement pour le RP (Roleplay) dans GTA. Il n'a aucune affiliation avec des services de police réels et n'a aucune valeur légale.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer l'utilisateur connecté
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+            
+            // Vérifier le niveau d'accès
+            if (currentUser.accessLevel < 3) {
+                window.location.href = "agent-dashboard.html";
+                alert("Accès refusé. Cette page est réservée au corps de commandement et plus.");
+                return;
+            }
+            
+            console.log("Page Service - Utilisateur connecté:", currentUser.prenom, currentUser.nom);
+            
+            // Charger et afficher les données de service
+            loadServiceData();
+        });
+        
+        // Quota de 5 minutes (0.0833 heures)
+        const QUOTA_HOURS = 5/60; // 5 minutes en heures
+        
+        function loadServiceData() {
+            const serviceHistory = JSON.parse(localStorage.getItem('serviceHistory') || '{}');
+            const serviceCards = document.getElementById('serviceCards');
+            const noServiceData = document.getElementById('noServiceData');
+            
+            // Obtenir la liste des agents
+            const personnel = getPersonnel();
+            
+            let cardsCreated = 0;
+            
+            // Créer une carte pour chaque agent
+            personnel.forEach(agent => {
+                const serviceData = serviceHistory[agent.matricule] || { totalHours: 0 };
+                const weeklyHours = getWeeklyHours(agent.matricule);
+                const metQuota = weeklyHours >= QUOTA_HOURS;
+                
+                const card = document.createElement('div');
+                card.className = `service-card ${metQuota ? 'quota-met' : 'quota-not-met'}`;
+                card.innerHTML = `
+                    <div class="service-info">
+                        <div class="agent-id">
+                            <h3>${agent.matricule}</h3>
+                            <p>${agent.prenom} ${agent.nom}</p>
+                            <div class="weekly-hours ${metQuota ? 'quota-met' : 'quota-not-met'}">
+                                <span>${formatHours(weeklyHours)}</span> / 
+                                <span>${formatHours(QUOTA_HOURS)} requis</span>
+                            </div>
+                        </div>
+                        <div class="service-details" style="display: none;">
+                            <div class="service-hours">
+                                <p>Total</p>
+                                <p>${formatHours(serviceData.totalHours)}</p>
+                            </div>
+                            <div class="quota-status ${metQuota ? 'met' : 'not-met'}">
+                                ${metQuota ? '✓ Quota atteint' : '✗ Quota non atteint'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Afficher les détails au survol
+                card.addEventListener('mouseenter', function() {
+                    this.querySelector('.service-details').style.display = 'flex';
+                    this.querySelector('.agent-id').style.display = 'none';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.querySelector('.service-details').style.display = 'none';
+                    this.querySelector('.agent-id').style.display = 'flex';
+                });
+                
+                serviceCards.appendChild(card);
+                cardsCreated++;
+            });
+            
+            // Afficher le message si aucune carte n'a été créée
+            if (cardsCreated === 0) {
+                noServiceData.style.display = 'block';
+            } else {
+                noServiceData.style.display = 'none';
+            }
+        }
+        
+        function getWeeklyHours(matricule) {
+            const serviceHistory = JSON.parse(localStorage.getItem('serviceHistory') || '{}');
+            const agentHistory = serviceHistory[matricule];
+            
+            if (!agentHistory || !agentHistory.services) return 0;
+            
+            const now = new Date();
+            const weekStart = new Date(now);
+            weekStart.setDate(now.getDate() - now.getDay());
+            weekStart.setHours(0, 0, 0, 0);
+            
+            let weeklyHours = 0;
+            agentHistory.services.forEach(service => {
+                const serviceDate = new Date(service.start);
+                if (serviceDate >= weekStart) {
+                    weeklyHours += service.duration;
+                }
+            });
+            
+            return weeklyHours;
+        }
+        
+        function formatHours(hours) {
+            const h = Math.floor(hours);
+            const m = Math.floor((hours - h) * 60);
+            const s = Math.floor(((hours - h) * 60 - m) * 60);
+            
+            if (hours < 1) {
+                if (m === 0) {
+                    return `${s}s`;
+                }
+                return `${m}m ${s}s`;
+            }
+            return `${h}h ${m}m`;
+        }
+    </script>    
+</body>
+</html>
