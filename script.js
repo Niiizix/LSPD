@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const formStatus = document.getElementById('formStatus');
     
     // URL de votre webhook Discord (à remplacer par votre URL réelle)
-    const webhookUrl = "https://discord.com/api/webhooks/1350950036707475456/tDPQnW1tjgKIwbS19l73pNv8PFOY5R5-YgC_pBbC0pC_n77uNHe1Jt8N1jjfV45znPUx";
+    const webhookUrl = "https://discord.com/api/webhooks/1369278950077104229/bDqJnKwJ8GqyGzB1T9RHLF9edTn9oMwJ-fdZZZrsQedlzvYvUZrvC_pp07Cci_b6_XQS";
     
     // Ouvrir la modal quand on clique sur le bouton
     if (openBtn) {
@@ -1179,10 +1179,17 @@ function initializeContactPage() {
     
     // URLs des webhooks Discord pour chaque service
     const webhooks = {
-        'direction': 'https://discord.com/api/webhooks/1367859827958878228/MlWyQUxhf7kPYbvzMNa7Po_W6WssxUvS_NaoFChwj5eif0_0Kg4ddAoGoBlVcCuty0j2',
-        'plaintes': 'https://discord.com/api/webhooks/1367859944644411462/io-qgLKa9rUwDRv9rlWz9ZDc1vjMEcZfbZThbtlWGB-5jv3Cvily6InbGh0LmgTfDmsB',
-        'ppa': 'https://discord.com/api/webhooks/1367859998629036123/CVb7rG2TTfRGyosbThoxK9MVf8D_W5npHcUGNdtExfmuS-XqLD071dujRiiOSmQk_DPr',
-        'casier': 'https://discord.com/api/webhooks/1367860049317204060/1voWedR0ziYfnCAxnG34cJE_D1BQRs5SJ48yRWVtg__YQ9ja03CNO0VZ_iDodwD4PUUL'
+        'direction': 'https://discord.com/api/webhooks/1369293397759758467/UtNqr6Fj5U0-0Ma2Trdp0ZBMhBQueC1RTOdRxyPUbysmeSluQZMSnyOCtvO8kVo3E9B6',
+        'plaintes': 'https://discord.com/api/webhooks/1368963374444056586/MeFJ4NchGJKfPG6kX4BfkLeI_2Q_CP0Mn72qjTYxexpOJVmZUiYL8Ck4-hX_4tYohcum',
+        'ppa': 'https://discord.com/api/webhooks/1368978068873678908/NMXm0JdUY9MleLzhyZGSwuxHMJLjjB5svIHrX-2aW-sJh5ep_FKuuyXIIbkvMgfRAoh1',
+        'casier': 'https://discord.com/api/webhooks/1368978100729151580/jBjsQCi8DxzybIODRw3v6LinyszIwjnmUXH8WbEYkKaAGJm-7gHMs3_V7pZD2T7QmlwY'
+    };
+
+    // IDs des threads existants pour chaque type de formulaire spécifique
+    const threadIds = {
+        'plaintes': '1368959888436494526',
+        'ppa': '1368960121480155229',
+        'casier': '1368960252745220157'
     };
     
     // Ajouter un événement de clic sur les options de service
@@ -1337,13 +1344,23 @@ function initializeContactPage() {
         });
     }
     
+    
     // Fonction pour envoyer les données à Discord
     function sendToDiscord(formType, discord, phone, specificData, imageDataUrl, imageName) {
         // Sélectionner le webhook approprié
         const webhookUrl = webhooks[formType];
-        
+
         // Créer les données Discord selon le type de formulaire
         let payload = createDiscordPayload(formType, discord, phone, specificData);
+        
+        // Déterminer si ce type doit être envoyé dans un thread
+        let url = webhookUrl;
+
+        // Si ce type doit utiliser un thread, ajouter le paramètre thread_id
+        if (formType !== 'direction' && threadIds[formType]) {
+            url = `${webhookUrl}?thread_id=${threadIds[formType]}`;
+            console.log(`Envoi vers le thread: ${threadIds[formType]} pour le type: ${formType}`);
+        }
         
         // Si on a une image, l'envoyer en tant que fichier joint
         if (imageDataUrl) {
@@ -1375,7 +1392,7 @@ function initializeContactPage() {
             formData.append('payload_json', JSON.stringify(payload));
             
             // Envoyer la requête avec le fichier joint
-            fetch(webhookUrl, {
+            fetch(url, {
                 method: 'POST',
                 body: formData
             })
@@ -1383,7 +1400,7 @@ function initializeContactPage() {
             .catch(error => handleError(error));
         } else {
             // Envoyer sans fichier (juste le payload JSON)
-            fetch(webhookUrl, {
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1583,3 +1600,221 @@ function validateFormFields(formType) {
     
     return true;
 }
+
+// Fonction pour envoyer les informations des agents à Discord
+function sendAgentsToDiscord() {
+    // URL du webhook Discord (à remplacer par votre URL réelle)
+    const webhookUrl = "https://discord.com/api/webhooks/1369304468415582209/OinpDpJUWrFP8EVPeL0vPD_X8XvsvZRxoKirZhkkXNl0XLVM795KpEeypbCEmVuOPsn3";
+    
+    // Récupérer les agents
+    const agents = getPersonnel();
+    
+    // Trier les agents par ordre hiérarchique (du plus haut au plus bas grade)
+    agents.sort((a, b) => {
+        const rankA = hierarchyRanks.indexOf(a.grade);
+        const rankB = hierarchyRanks.indexOf(b.grade);
+        // Inverser l'ordre car dans hierarchyRanks, l'index est plus petit pour les grades inférieurs
+        return rankA - rankB;
+    });
+    
+    // Récupérer l'ID du dernier message envoyé (s'il existe)
+    const lastMessageId = localStorage.getItem('discordLastMessageId');
+    
+    // Grouper les agents par grade
+    const agentsByGrade = {};
+    agents.forEach(agent => {
+        if (!agentsByGrade[agent.grade]) {
+            agentsByGrade[agent.grade] = [];
+        }
+        agentsByGrade[agent.grade].push(agent);
+    });
+    
+    // Couleurs pour chaque corps (en hexadécimal pour Discord)
+    const corpsColors = {
+        "Corps de direction": 0xE74C3C,     // Rouge
+        "Corps de commandement": 0xF39C12,  // Orange
+        "Corps de supervision": 0x2ECC71,   // Vert
+        "Corps exécutif": 0x3498DB          // Bleu
+    };
+    
+    // Créer les champs pour l'embed Discord
+    const fields = [];
+    
+    // Parcourir les grades du plus haut au plus bas
+    hierarchyRanks.slice().reverse().forEach(grade => {
+        const agentsWithGrade = agentsByGrade[grade];
+        
+        if (agentsWithGrade && agentsWithGrade.length > 0) {
+            // Déterminer le corps de ce grade
+            const corps = getCorpsByRank(grade);
+            
+            // Ajouter le grade comme titre de section
+            fields.push({
+                name: `**${grade}**`,
+                value: "\u200B", // Caractère invisible pour créer un espace
+                inline: false
+            });
+            
+            // Ajouter chaque agent
+            agentsWithGrade.forEach(agent => {
+                fields.push({
+                    name: `${agent.prenom} ${agent.nom}`,
+                    value: `• Matricule: ${agent.matricule}\n• Badge: ${agent.badge}\n• Code: ${agent.code}`,
+                    inline: true
+                });
+            });
+            
+            // Ajouter un séparateur après chaque groupe
+            fields.push({
+                name: "\u200B",
+                value: "\u200B",
+                inline: false
+            });
+        }
+    });
+    
+    // Supprimer le dernier séparateur
+    if (fields.length > 0 && fields[fields.length - 1].name === "\u200B") {
+        fields.pop();
+    }
+    
+    // Créer l'embed
+    const payload = {
+        embeds: [{
+            title: "Liste des agents LSPD",
+            description: "Liste complète des agents avec leurs informations d'accès",
+            color: 0x0A3D62, // Couleur principale LSPD (bleu foncé)
+            fields: fields,
+            footer: {
+                text: `Dernière mise à jour: ${new Date().toLocaleString()}`
+            },
+            thumbnail: {
+                url: "https://static.wikia.nocookie.net/cityv/images/b/b0/1492419055-logolspd.png/revision/latest?cb=20181101122500&path-prefix=fr"
+            }
+        }]
+    };
+    
+    // Si un message précédent existe, le supprimer
+    if (lastMessageId) {
+        // Supprimer l'ancien message
+        fetch(`${webhookUrl}/messages/${lastMessageId}`, {
+            method: "DELETE"
+        })
+        .catch(error => {
+            console.error("Erreur lors de la suppression du message précédent:", error);
+        })
+        .finally(() => {
+            // Envoyer le nouveau message après la tentative de suppression
+            sendNewMessage();
+        });
+    } else {
+        // Aucun message précédent, envoyer directement
+        sendNewMessage();
+    }
+    
+    // Fonction pour envoyer le nouveau message
+    function sendNewMessage() {
+        fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Stocker l'ID du message pour la prochaine mise à jour
+            if (data && data.id) {
+                localStorage.setItem('discordLastMessageId', data.id);
+                console.log("Message envoyé à Discord avec succès, ID:", data.id);
+            }
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'envoi à Discord:", error);
+        });
+    }
+}
+
+// Fonction pour configurer la mise à jour périodique
+function setupAgentsSyncToDiscord(intervalMinutes = 30) {
+    // Convertir les minutes en millisecondes
+    const interval = intervalMinutes * 60 * 1000;
+    
+    // Envoyer immédiatement les données
+    sendAgentsToDiscord();
+    
+    // Configurer l'intervalle pour les mises à jour régulières
+    const intervalId = setInterval(sendAgentsToDiscord, interval);
+    
+    // Stocker l'ID de l'intervalle pour pouvoir l'arrêter plus tard si nécessaire
+    localStorage.setItem('discordSyncIntervalId', intervalId);
+    
+    console.log(`Synchronisation des agents configurée (toutes les ${intervalMinutes} minutes)`);
+    
+    return intervalId;
+}
+
+// Fonction pour arrêter la synchronisation
+function stopAgentsSyncToDiscord() {
+    const intervalId = localStorage.getItem('discordSyncIntervalId');
+    if (intervalId) {
+        clearInterval(parseInt(intervalId));
+        localStorage.removeItem('discordSyncIntervalId');
+        console.log("Synchronisation des agents arrêtée");
+    }
+}
+
+// Ajouter un bouton à la page de paramètres pour activer/désactiver la synchronisation
+document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier si nous sommes sur la page des paramètres
+    if (window.location.pathname.includes('parametres.html')) {
+        // Récupérer le conteneur de la page en construction
+        const constructionContainer = document.querySelector('.construction-container');
+        
+        if (constructionContainer) {
+            // Créer la section de synchronisation Discord
+            const syncSection = document.createElement('div');
+            syncSection.className = 'sync-discord-section';
+            syncSection.innerHTML = `
+                <h3><i class="fab fa-discord"></i> Synchronisation avec Discord</h3>
+                <p>Activer/désactiver la synchronisation des informations des agents avec Discord.</p>
+                <div class="sync-controls">
+                    <button id="startSyncBtn" class="btn btn-primary">Démarrer la synchronisation</button>
+                    <button id="stopSyncBtn" class="btn btn-danger">Arrêter la synchronisation</button>
+                </div>
+                <div id="syncStatus" class="sync-status"></div>
+            `;
+            
+            // Insérer avant le conteneur de construction
+            constructionContainer.parentNode.insertBefore(syncSection, constructionContainer);
+            
+            // Ajouter les événements aux boutons
+            const startSyncBtn = document.getElementById('startSyncBtn');
+            const stopSyncBtn = document.getElementById('stopSyncBtn');
+            const syncStatus = document.getElementById('syncStatus');
+            
+            // Vérifier si la synchronisation est active
+            const isActive = localStorage.getItem('discordSyncIntervalId') !== null;
+            updateSyncButtonsState(isActive);
+            
+            startSyncBtn.addEventListener('click', function() {
+                const intervalId = setupAgentsSyncToDiscord(30); // Synchroniser toutes les 30 minutes
+                updateSyncButtonsState(true);
+                syncStatus.textContent = "Synchronisation activée. Les données sont envoyées toutes les 30 minutes.";
+                syncStatus.className = "sync-status success";
+            });
+            
+            stopSyncBtn.addEventListener('click', function() {
+                stopAgentsSyncToDiscord();
+                updateSyncButtonsState(false);
+                syncStatus.textContent = "Synchronisation désactivée.";
+                syncStatus.className = "sync-status";
+            });
+            
+            function updateSyncButtonsState(isActive) {
+                startSyncBtn.disabled = isActive;
+                stopSyncBtn.disabled = !isActive;
+            }
+        }
+    }
+});
