@@ -3053,3 +3053,47 @@ select:focus {
         grid-template-columns: 1fr;
     }
 }
+
+/* Styles pour la synchronisation Discord */
+.sync-discord-section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.sync-discord-section h3 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+    display: flex;
+    align-items: center;
+}
+
+.sync-discord-section h3 i {
+    margin-right: 10px;
+    color: #7289DA; /* Couleur Discord */
+}
+
+.sync-controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.sync-status {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sync-status.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.sync-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
