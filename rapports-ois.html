@@ -247,7 +247,7 @@
             let currentReportId = null;
             
             // URL du webhook Discord (à remplacer par votre URL réelle)
-            const webhookUrl = "https://discord.com/api/webhooks/1367311505812623360/jCsNRwE9Jxu0E0xQbeSddZ12EABgG0UBu5t__LDTMvhGdEplEDNVM52JeGn__QgYf9GH";
+            const webhookUrl = "https://discord.com/api/webhooks/1369018374704730203/RlqNmyntJFvcmcyuWNj4Go3lMJUqLfPdU7b8RLM6P7FvDCK67xbZaqsKqsBAEom1K1DQ";
             
             // Afficher ou masquer la liste des rapports selon le niveau d'accès
             const reportsListSection = document.getElementById('reportsListSection');
@@ -526,11 +526,102 @@
                 reportViewModal.style.display = "block";
             }
             
-            // Fonction pour envoyer une mise à jour de statut à Discord
+            // Fonction pour envoyer une mise à jour de statut à Discord et créer un thread pour les enquêtes
             function sendStatusUpdateToDiscord(status, reportId) {
                 const report = oisReports.find(r => r.id === reportId);
                 if (!report) return;
                 
+                // URL du webhook Discord (à remplacer par votre URL réelle)
+                const webhookUrl = "https://discord.com/api/webhooks/1369018374704730203/RlqNmyntJFvcmcyuWNj4Go3lMJUqLfPdU7b8RLM6P7FvDCK67xbZaqsKqsBAEom1K1DQ";
+                
+                // URL du webhook du forum pour les enquêtes (à remplacer par votre URL réelle)
+                const forumWebhookUrl = "https://discord.com/api/webhooks/1369311377159618640/ZV7CIMIkLenmZCBeGo4efeBcZJffQVfdU6MfincmEj9N7nbrx9KR13Ojj0oXwCVgDDkd";
+                
+                // Si le statut est "Enquête en cours", créer un thread dans le forum
+                if (status === "Enquête en cours") {
+                    // Formatage de la date et heure pour le titre du thread
+                    const reportDate = new Date(report.timestamp);
+                    const formattedDate = reportDate.toLocaleDateString();
+                    const formattedTime = reportDate.toLocaleTimeString();
+                    
+                    // Titre du thread
+                    const threadTitle = `Enquête OIS - ${formattedDate} ${formattedTime}`;
+                    
+                    // Contenu du thread avec les détails complets du rapport
+                    const embed = {
+                        title: "Rapport OIS en enquête",
+                        color: 0xe74c3c, // Rouge
+                        fields: [
+                            {
+                                name: "👮 Agent concerné",
+                                value: `**${report.agent.grade}** ${report.agent.prenom} ${report.agent.nom} (${report.agent.matricule})`,
+                                inline: false
+                            },
+                            {
+                                name: "📅 Date et Heure des faits",
+                                value: `${report.dateFaits} à ${report.heureFaits}`,
+                                inline: true
+                            },
+                            {
+                                name: "📍 Lieu des faits",
+                                value: report.lieuFaits,
+                                inline: true
+                            },
+                            {
+                                name: "🔫 Arme utilisée",
+                                value: `${report.armeUtilisee}`,
+                                inline: true
+                            },
+                            {
+                                name: "🔢 Nombre de balles tirées",
+                                value: `${report.nombreBalles}`,
+                                inline: true
+                            },
+                            {
+                                name: "📝 Motif d'usage de l'arme",
+                                value: report.motifUsage,
+                                inline: false
+                            },
+                            {
+                                name: "👤 Évalué par",
+                                value: `${currentUser.grade} ${currentUser.prenom} ${currentUser.nom}`,
+                                inline: false
+                            },
+                            {
+                                name: "🚨 Statut",
+                                value: "⚠️ **ENQUÊTE EN COURS** ⚠️",
+                                inline: false
+                            }
+                        ],
+                        timestamp: new Date().toISOString(),
+                        footer: {
+                            text: "Système LSPD - Enquête OIS"
+                        }
+                    };
+                    
+                    // Créer le thread dans le forum
+                    fetch(forumWebhookUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            thread_name: threadTitle,
+                            embeds: [embed]
+                        })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Erreur lors de la création du thread");
+                        }
+                        console.log("Thread d'enquête créé avec succès");
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la création du thread:", error);
+                    });
+                }
+                
+                // Envoyer également la notification standard dans le canal principal
                 const discordPayload = {
                     embeds: [{
                         title: `Rapport OIS - Statut mis à jour: ${status}`,
@@ -559,7 +650,7 @@
                     }]
                 };
                 
-                // Envoyer la notification à Discord
+                // Envoyer la notification au canal principal
                 fetch(webhookUrl, {
                     method: "POST",
                     headers: {
