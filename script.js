@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const formStatus = document.getElementById('formStatus');
     
     // URL de votre webhook Discord (à remplacer par votre URL réelle)
-    const webhookUrl = "https://discord.com/api/webhooks/1369278950077104229/bDqJnKwJ8GqyGzB1T9RHLF9edTn9oMwJ-fdZZZrsQedlzvYvUZrvC_pp07Cci_b6_XQS";
+    const webhookUrl = "https://discordapp.com/api/webhooks/1431767574735228992/9x_OnyhCqk5hEdZW4-hHy_wZojbgaeSOti2VjwY3R8wDm9EhXBZlb1OBmGB0FaRr1R9z";
     
     // Ouvrir la modal quand on clique sur le bouton
     if (openBtn) {
@@ -1179,10 +1179,10 @@ function initializeContactPage() {
     
     // URLs des webhooks Discord pour chaque service
     const webhooks = {
-        'direction': 'https://discord.com/api/webhooks/1369293397759758467/UtNqr6Fj5U0-0Ma2Trdp0ZBMhBQueC1RTOdRxyPUbysmeSluQZMSnyOCtvO8kVo3E9B6',
-        'plaintes': 'https://discord.com/api/webhooks/1368963374444056586/MeFJ4NchGJKfPG6kX4BfkLeI_2Q_CP0Mn72qjTYxexpOJVmZUiYL8Ck4-hX_4tYohcum',
-        'ppa': 'https://discord.com/api/webhooks/1368978068873678908/NMXm0JdUY9MleLzhyZGSwuxHMJLjjB5svIHrX-2aW-sJh5ep_FKuuyXIIbkvMgfRAoh1',
-        'casier': 'https://discord.com/api/webhooks/1368978100729151580/jBjsQCi8DxzybIODRw3v6LinyszIwjnmUXH8WbEYkKaAGJm-7gHMs3_V7pZD2T7QmlwY'
+        'direction': 'https://discordapp.com/api/webhooks/1431767574735228992/9x_OnyhCqk5hEdZW4-hHy_wZojbgaeSOti2VjwY3R8wDm9EhXBZlb1OBmGB0FaRr1R9z',
+        'plaintes': 'https://discordapp.com/api/webhooks/1431767574735228992/9x_OnyhCqk5hEdZW4-hHy_wZojbgaeSOti2VjwY3R8wDm9EhXBZlb1OBmGB0FaRr1R9z',
+        'ppa': 'https://discordapp.com/api/webhooks/1431767574735228992/9x_OnyhCqk5hEdZW4-hHy_wZojbgaeSOti2VjwY3R8wDm9EhXBZlb1OBmGB0FaRr1R9z',
+        'casier': 'https://discordapp.com/api/webhooks/1431767574735228992/9x_OnyhCqk5hEdZW4-hHy_wZojbgaeSOti2VjwY3R8wDm9EhXBZlb1OBmGB0FaRr1R9z'
     };
 
     // IDs des threads existants pour chaque type de formulaire spécifique
@@ -1604,7 +1604,7 @@ function validateFormFields(formType) {
 // Fonction pour envoyer les informations des agents à Discord
 function sendAgentsToDiscord() {
     // URL du webhook Discord (à remplacer par votre URL réelle)
-    const webhookUrl = "https://discord.com/api/webhooks/1369304468415582209/OinpDpJUWrFP8EVPeL0vPD_X8XvsvZRxoKirZhkkXNl0XLVM795KpEeypbCEmVuOPsn3";
+    const webhookUrl = "https://discordapp.com/api/webhooks/1431767574735228992/9x_OnyhCqk5hEdZW4-hHy_wZojbgaeSOti2VjwY3R8wDm9EhXBZlb1OBmGB0FaRr1R9z";
     
     // Récupérer les agents
     const agents = getPersonnel();
@@ -1818,3 +1818,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
